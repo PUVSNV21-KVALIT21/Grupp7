@@ -4,6 +4,7 @@ using HakimLivs.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HakimLivs.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220428142008_first")]
+    partial class first
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -95,6 +97,9 @@ namespace HakimLivs.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("OrderID")
+                        .HasColumnType("int");
+
                     b.Property<string>("Origin")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -113,6 +118,8 @@ namespace HakimLivs.Data.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("OrderID");
 
                     b.ToTable("Products");
                 });
@@ -378,6 +385,13 @@ namespace HakimLivs.Data.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("HakimLivs.Models.Product", b =>
+                {
+                    b.HasOne("HakimLivs.Models.Order", null)
+                        .WithMany("Products")
+                        .HasForeignKey("OrderID");
+                });
+
             modelBuilder.Entity("HakimLivs.Models.User", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
@@ -464,6 +478,11 @@ namespace HakimLivs.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("HakimLivs.Models.Order", b =>
+                {
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }
