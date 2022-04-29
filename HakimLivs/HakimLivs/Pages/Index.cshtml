@@ -1,10 +1,45 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Hakim Livs!";
 }
 
 <div class="text-center">
     <h1 class="display-4">TJABBA</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+<div class="row row-cols-auto row-cols-md-4">
+    @foreach (var product in Model.Products)
+    {
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                    @if(product.DiscountPrice == null){
+                        <h5 class="card-title">@product.Price kr</h5>
+                    }
+                    else
+                    {
+                        <h5 class="card-title">@product.DiscountPrice kr</h5>
+                    }                    
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">@product.Name</li>
+                        <li class="list-group-item">product.Brand</li>
+                        <li class="list-group-item">@($"{product.UnitValue}{product.UnitType}")</li>
+                        @if(product.DiscountPrice != null)
+                        {
+                           <li class="list-group-item">@Model.GetProductDiscountPercentage(product)%</li> 
+                        }
+                    </ul>
+                    <a href="#" class="btn btn-primary">Köp</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+https://getbootstrap.com/docs/5.1/components/card/
+
+
+
