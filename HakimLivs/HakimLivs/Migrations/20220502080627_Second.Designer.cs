@@ -4,6 +4,7 @@ using HakimLivs.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HakimLivs.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220502080627_Second")]
+    partial class Second
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,7 +43,7 @@ namespace HakimLivs.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("HakimLivs.Models.OrderProduct", b =>
@@ -67,7 +69,7 @@ namespace HakimLivs.Migrations
 
                     b.HasIndex("ProductID");
 
-                    b.ToTable("OrderProducts", (string)null);
+                    b.ToTable("OrderProducts");
                 });
 
             modelBuilder.Entity("HakimLivs.Models.Product", b =>
@@ -122,7 +124,7 @@ namespace HakimLivs.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("HakimLivs.Models.User", b =>
@@ -151,7 +153,7 @@ namespace HakimLivs.Migrations
 
                     b.HasIndex("IdentityUserId");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -392,7 +394,7 @@ namespace HakimLivs.Migrations
                         .WithMany()
                         .HasForeignKey("IdentityUserId");
 
-                    b.OwnsOne("HakimLivs.Models.User.Address#HakimLivs.Models.Address", "Address", b1 =>
+                    b.OwnsOne("HakimLivs.Models.Address", "Address", b1 =>
                         {
                             b1.Property<int>("UserID")
                                 .HasColumnType("int");
@@ -411,7 +413,7 @@ namespace HakimLivs.Migrations
 
                             b1.HasKey("UserID");
 
-                            b1.ToTable("Users", (string)null);
+                            b1.ToTable("Users");
 
                             b1.WithOwner()
                                 .HasForeignKey("UserID");
