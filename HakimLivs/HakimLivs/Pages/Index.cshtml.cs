@@ -20,12 +20,12 @@ namespace HakimLivs.Pages
 
         public List<Product> Products { get; set; }
 
-        public double? GetProductDiscountPercentage(Product product)
+        public decimal GetProductDiscountPercentage(Product product)
         {
             double? fraction = product.DiscountPrice / product.Price;
             double? percentage = (1 - fraction) * 100;
 
-            return Convert.ToDouble(Math.Round(Convert.ToDecimal(percentage), 0));
+            return Math.Round(Convert.ToDecimal(percentage), 0);
         }
 
 

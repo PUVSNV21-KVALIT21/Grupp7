@@ -4,17 +4,12 @@
     ViewData["Title"] = "Hakim Livs!";
 }
 
-<div class="text-center">
-    <h1 class="display-4">TJABBA</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
-
-<div class="row row-cols-auto row-cols-md-4">
+<div class="row row-cols-auto row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
     @foreach (var product in Model.Products)
     {
-        <div class="col">
-            <div class="card" style="width: 18rem;">
-                <img src="..." class="card-img-top" alt="...">
+        <div class="col p-3">
+            <div class="card h-100 text-center">
+                <img src="@product.Image" class="card-img-top" style="object-fit: cover; height: 200px;" alt="@product.Name">
                 <div class="card-body">
                     @if(product.DiscountPrice == null){
                         <h5 class="card-title">@product.Price kr</h5>
@@ -29,17 +24,15 @@
                         <li class="list-group-item">@($"{product.UnitValue}{product.UnitType}")</li>
                         @if(product.DiscountPrice != null)
                         {
-                           <li class="list-group-item">@Model.GetProductDiscountPercentage(product)%</li> 
+                           <li class="list-group-item">@Model.GetProductDiscountPercentage(product)%</li>
                         }
                     </ul>
-                    <a href="#" class="btn btn-primary">Köp</a>
+                </div>
+                <div class="card-footer">
+                    <button type="button" class="btn btn-primary btn-block" style="width:100%;">Köp</button>
                 </div>
             </div>
         </div>
     }
 </div>
-
-https://getbootstrap.com/docs/5.1/components/card/
-
-
 
