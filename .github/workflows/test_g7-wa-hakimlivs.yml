@@ -52,6 +52,6 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: 'g7-wa-hakimlivs-test'
-          slot-name: 'Test'
+          slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_8E1AD55798174109AB598719347AFD23 }}
           package: .
