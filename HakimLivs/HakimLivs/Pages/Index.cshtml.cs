@@ -1,29 +1,37 @@
 ﻿using HakimLivs.Data;
-using Microsoft.AspNetCore.Identity;
+using HakimLivs.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace HakimLivs.Pages
 {
     public class IndexModel : PageModel
     {
-        //private readonly ILogger<IndexModel> _logger;
-        private readonly ApplicationDbContext database;
-        private readonly UserManager<IdentityUser> _userManager;
-        public IndexModel(ApplicationDbContext database, UserManager<IdentityUser> userManager)
+        private readonly ApplicationDbContext _context;
+        private readonly ILogger<IndexModel> _logger;
+
+        public IndexModel(ILogger<IndexModel> logger, ApplicationDbContext context)
         {
-            this.database = database;
-            _userManager = userManager;
+            _context = context;
+            _logger = logger;
+
         }
 
-        //public IndexModel(ILogger<IndexModel> logger)
-        //{
-        //    _logger = logger;
-        //}
+        public List<Product> Products { get; set; }
+
+        public decimal GetProductDiscountPercentage(Product product)
+        {
+            double? fraction = product.DiscountPrice / product.Price;
+            double? percentage = (1 - fraction) * 100;
+
+            return Math.Round(Convert.ToDecimal(percentage), 0);
+        }
+
 
         public async Task OnGetAsync()
         {
-            await DbInitializer.InitializeAsync(database, _userManager);
+            Products = await _context.Products.ToListAsync();
         }
     }
 }
