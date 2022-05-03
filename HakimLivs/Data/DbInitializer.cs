@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Globalization;
-using System.Text.RegularExpressions;
 
 namespace HakimLivs.Data
 {
@@ -155,7 +154,7 @@ namespace HakimLivs.Data
                                     string name = item.SelectToken("attributes.title")?.ToString() ?? "";
 
                                     string d = item.SelectToken("attributes.body.value")?.ToString() ?? "";
-                                    string description = Utils.Utils.StripHTML(d);
+                                    string description = HakimLivs.Utils.Utils.StripHTML(d);
 
                                     string category = item.SelectToken("attributes.computed_categories[0].name")?.ToString() ?? "";
 
