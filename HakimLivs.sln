@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HakimLivs", "HakimLivs\HakimLivs.csproj", "{A4BFDBEF-918E-4FDA-AAF1-8A86D413730D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HakimLivs.Tests", "HakimLivs.Tests\HakimLivs.Tests.csproj", "{B42CE8F9-0D91-4540-A9FC-41A6750722B8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,10 +17,10 @@ Global
 		{A4BFDBEF-918E-4FDA-AAF1-8A86D413730D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4BFDBEF-918E-4FDA-AAF1-8A86D413730D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A4BFDBEF-918E-4FDA-AAF1-8A86D413730D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B6F94C21-E839-4143-8F35-E5B5E546A353}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B6F94C21-E839-4143-8F35-E5B5E546A353}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B6F94C21-E839-4143-8F35-E5B5E546A353}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B6F94C21-E839-4143-8F35-E5B5E546A353}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B42CE8F9-0D91-4540-A9FC-41A6750722B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B42CE8F9-0D91-4540-A9FC-41A6750722B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B42CE8F9-0D91-4540-A9FC-41A6750722B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B42CE8F9-0D91-4540-A9FC-41A6750722B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

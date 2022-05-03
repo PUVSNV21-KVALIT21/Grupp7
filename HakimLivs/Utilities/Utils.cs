@@ -2,7 +2,7 @@
 using HakimLivs.Models;
 using System.Text.RegularExpressions;
 
-namespace HakimLivs.Utils
+namespace HakimLivs.Utilities
 {
     public class Utils
     {

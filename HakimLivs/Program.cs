@@ -1,8 +1,6 @@
 using HakimLivs.Data;
-using HakimLivs.Utils;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
