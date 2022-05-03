@@ -20,11 +20,11 @@
                     }                    
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">@product.Name</li>
-                        <li class="list-group-item">product.Brand</li>
+                        <li class="list-group-item">@product.Brand</li>
                         <li class="list-group-item">@($"{product.UnitValue}{product.UnitType}")</li>
                         @if(product.DiscountPrice != null)
                         {
-                           <li class="list-group-item">@Model.GetProductDiscountPercentage(product)%</li>
+                           <li class="list-group-item">@Utils.GetProductDiscountPercentage(product)%</li>
                         }
                     </ul>
                 </div>

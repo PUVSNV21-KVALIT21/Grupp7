@@ -1,7 +1,6 @@
 using HakimLivs.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +22,8 @@ using (var scope = scopeFactory.CreateScope())
     try
     {
         var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        //// Clears the database on load.
+        //await Utils.DropDatabase(context);
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
         await DbInitializer.InitializeAsync(context, userManager);
     }

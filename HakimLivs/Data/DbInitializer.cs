@@ -1,9 +1,9 @@
 ﻿using HakimLivs.Models;
+using HakimLivs.Utilities;
 using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Globalization;
-using System.Text.RegularExpressions;
 
 namespace HakimLivs.Data
 {
@@ -19,10 +19,10 @@ namespace HakimLivs.Data
         {
             CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
 
-            if (database.Products.Any())
-            {
-                return;
-            }
+            //if (database.Products.Any())
+            //{
+            //    return;
+            //}
 
             await GetProductsAsync(database);
 
@@ -147,25 +147,25 @@ namespace HakimLivs.Data
                             string data = await content.ReadAsStringAsync();
                             if (data != null)
                             {
-                                Console.WriteLine("hej");
-
                                 var dataObj = JObject.Parse(data);
                                 var listObjects = dataObj.GetValue("data")?.ToList();
 
                                 foreach (var item in listObjects!)
                                 {
-                                    string name = item.SelectToken("attributes.title")?.ToString();
+                                    string name = item.SelectToken("attributes.title")?.ToString() ?? "";
 
-                                    string d = item.SelectToken("attributes.body.value")?.ToString();
-                                    string description = StripHTML(d);
+                                    string d = item.SelectToken("attributes.body.value")?.ToString() ?? "";
+                                    string description = Utils.StripHTML(d);
 
-                                    string category = item.SelectToken("attributes.computed_categories[0].name")?.ToString();
+                                    string category = item.SelectToken("attributes.computed_categories[0].name")?.ToString() ?? "";
+
+                                    string brand = item.SelectToken("attributes.computed_brand.name")?.ToString() ?? "";
                                     string image = item.SelectToken("attributes.computed_variations[0]" +
-                                        ".computed_images[0].styles.catalog")?.ToString();
+                                        ".computed_images[0].styles.catalog")?.ToString() ?? "";
 
                                     double price = 0;
                                     string p = item.SelectToken("attributes.computed_variations[0]" +
-                                        ".normal_price.number")?.ToString();
+                                        ".normal_price.number")?.ToString() ?? "";
                                     if (p != null && p != "")
                                     {
                                         price = double.Parse(p);
@@ -173,27 +173,27 @@ namespace HakimLivs.Data
                                     else
                                     {
                                         price = double.Parse(item.SelectToken("attributes.computed_variations[0]" +
-                                        ".resolved_price.number")?.ToString());
+                                        ".resolved_price.number")?.ToString() ?? "0");
                                     }
 
-                                    double discountPrice = 0;
+                                    double? discountPrice = null;
                                     string discount = item.SelectToken("attributes.computed_variations[0]" +
-                                        ".prices[1].price.number")?.ToString();
+                                        ".prices[1].price.number")?.ToString() ?? "";
                                     if (discount != null && discount != "")
                                     {
                                         discountPrice = double.Parse(discount);
                                     }
 
                                     string origin = item.SelectToken("attributes.computed_variations[0]" +
-                                        ".country_of_origin_full")?.ToString();
+                                        ".country_of_origin_full")?.ToString() ?? "";
                                     var expirationDate = DateTime.Parse(item.SelectToken("attributes.computed_variations[0]" +
-                                        ".best_before")?.ToString());
+                                        ".best_before")?.ToString() ?? DateTime.Now.ToString());
                                     int stock = int.Parse(item.SelectToken("attributes.computed_variations[0]" +
-                                        ".stock")?.ToString());
+                                        ".stock")?.ToString() ?? "0");
                                     string unitType = item.SelectToken("attributes.computed_variations[0]" +
-                                        ".measurement.unit")?.ToString();
+                                        ".measurement.unit")?.ToString() ?? "";
                                     double unitValue = double.Parse(item.SelectToken("attributes.computed_variations[0]" +
-                                        ".measurement.number")?.ToString());
+                                        ".measurement.number")?.ToString() ?? "0");
                                     double comparisonPrice = 1/unitValue * price;
 
                                     var product = new Product
@@ -201,6 +201,7 @@ namespace HakimLivs.Data
                                         Name = name,
                                         Description = description,
                                         Category = category,
+                                        Brand = brand,
                                         Image = image,
                                         Price = price,
                                         DiscountPrice = discountPrice,
@@ -229,16 +230,6 @@ namespace HakimLivs.Data
             {
                 Console.WriteLine(exception);
             }
-        }
-        // Code from https://stackoverflow.com/a/18154046
-        /// <summary>
-        /// Strips the HTML.
-        /// </summary>
-        /// <param name="input">The input string.</param>
-        /// <returns>Input string without html tags</returns>
-        public static string StripHTML(string input)
-        {
-            return Regex.Replace(input, "<.*?>", String.Empty);
         }
     }
 }
