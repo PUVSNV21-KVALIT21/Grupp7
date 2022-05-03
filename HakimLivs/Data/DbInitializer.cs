@@ -155,7 +155,7 @@ namespace HakimLivs.Data
                                     string name = item.SelectToken("attributes.title")?.ToString() ?? "";
 
                                     string d = item.SelectToken("attributes.body.value")?.ToString() ?? "";
-                                    string description = StripHTML(d);
+                                    string description = Utils.Utils.StripHTML(d);
 
                                     string category = item.SelectToken("attributes.computed_categories[0].name")?.ToString() ?? "";
 
@@ -230,16 +230,6 @@ namespace HakimLivs.Data
             {
                 Console.WriteLine(exception);
             }
-        }
-        // Code from https://stackoverflow.com/a/18154046
-        /// <summary>
-        /// Strips the HTML.
-        /// </summary>
-        /// <param name="input">The input string.</param>
-        /// <returns>Input string without html tags</returns>
-        public static string StripHTML(string input)
-        {
-            return Regex.Replace(input, "<.*?>", String.Empty);
         }
     }
 }

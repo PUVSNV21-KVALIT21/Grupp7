@@ -35,5 +35,14 @@ namespace UnitTests
 
             Assert.AreEqual(test, 63);
         }
+
+        [TestMethod]
+        public void StripHTMLTags()
+        {
+            string tag = "<p>HEJ</p>";
+
+            string test = Utils.StripHTML(tag);
+            Assert.AreEqual(test, "HEJ");
+        }
     }
 }

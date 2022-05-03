@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HakimLivs", "HakimLivs\HakimLivs.csproj", "{A4BFDBEF-918E-4FDA-AAF1-8A86D413730D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{B6F94C21-E839-4143-8F35-E5B5E546A353}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HakimLivs.Tests", "UnitTests\HakimLivs.Tests.csproj", "{B6F94C21-E839-4143-8F35-E5B5E546A353}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
