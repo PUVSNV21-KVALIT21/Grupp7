@@ -23,7 +23,7 @@ jobs:
           include-prerelease: true
 
       - name: Build with dotnet
-        run: dotnet build --configuration Release
+        run: dotnet build ./HakimLivs/HakimLivs.csproj --configuration Release
         
       - name: dotnet test
         run: dotnet test
