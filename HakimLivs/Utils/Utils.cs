@@ -1,4 +1,5 @@
-﻿using HakimLivs.Models;
+﻿using HakimLivs.Data;
+using HakimLivs.Models;
 using System.Text.RegularExpressions;
 
 namespace HakimLivs.Utils
@@ -22,5 +23,20 @@ namespace HakimLivs.Utils
         {
             return Regex.Replace(input, "<.*?>", String.Empty);
         }
-    }   
+
+        /// <summary>
+        /// Delete all rows in the databas.
+        /// </summary>
+        /// <param ApplicationDbContext="database">The database context for enviroment</param>
+       
+        public async static Task DropDatabase(ApplicationDbContext database)
+        {
+            database.Orders.RemoveRange(database.Orders);
+            database.OrderProducts.RemoveRange(database.OrderProducts);
+            database.Products.RemoveRange(database.Products);
+            database.Users.RemoveRange(database.Users);
+
+            await database.SaveChangesAsync();
+        }
+    }
 }
