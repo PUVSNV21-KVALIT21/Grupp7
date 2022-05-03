@@ -1,4 +1,5 @@
 ﻿using HakimLivs.Models;
+using HakimLivs.Utilities;
 using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -154,7 +155,7 @@ namespace HakimLivs.Data
                                     string name = item.SelectToken("attributes.title")?.ToString() ?? "";
 
                                     string d = item.SelectToken("attributes.body.value")?.ToString() ?? "";
-                                    string description = HakimLivs.Utils.Utils.StripHTML(d);
+                                    string description = Utils.StripHTML(d);
 
                                     string category = item.SelectToken("attributes.computed_categories[0].name")?.ToString() ?? "";
 
