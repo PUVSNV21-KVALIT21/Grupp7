@@ -13,6 +13,8 @@ namespace HakimLivs.Models
         [Required]
         public string Category { get; set; }
         [Required]
+        public string Brand { get; set; }
+        [Required]
         public string Image { get; set; }
         public double Price { get; set; }
         public double? DiscountPrice { get; set; }
