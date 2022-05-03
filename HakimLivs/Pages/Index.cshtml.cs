@@ -20,15 +20,6 @@ namespace HakimLivs.Pages
 
         public List<Product> Products { get; set; }
 
-        public decimal GetProductDiscountPercentage(Product product)
-        {
-            double? fraction = product.DiscountPrice / product.Price;
-            double? percentage = (1 - fraction) * 100;
-
-            return Math.Round(Convert.ToDecimal(percentage), 0);
-        }
-
-
         public async Task OnGetAsync()
         {
             Products = await _context.Products.ToListAsync();
