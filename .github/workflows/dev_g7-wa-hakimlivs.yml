@@ -26,10 +26,10 @@ jobs:
         run: dotnet restore
 
       - name: Build with dotnet
-        run: dotnet build --configuration Release
+        run: dotnet build ./HakimLivs/HakimLivs.csproj --configuration Release
         
       - name: dotnet test
-        run: dotnet test
+        run: dotnet test ./HakimLivs.Tests/HakimLivs.Tests.csproj
 
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
