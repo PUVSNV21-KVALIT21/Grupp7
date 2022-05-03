@@ -1,13 +1,12 @@
+using NUnit.Framework;
 using HakimLivs.Models;
 using HakimLivs.Utilities;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace HakimLivs.Tests
 {
-    [TestClass]
-    public class UnitTests
+    public class Tests
     {
-        [TestMethod]
+        [Test]
         public void DiscountPercentageInt()
         {
             Product product = new Product
@@ -21,7 +20,7 @@ namespace HakimLivs.Tests
             Assert.AreEqual(test, 50);
         }
 
-        [TestMethod]
+        [Test]
         public void DiscountPercentageDouble()
         {
             Product product = new Product
@@ -35,7 +34,7 @@ namespace HakimLivs.Tests
             Assert.AreEqual(test, 63);
         }
 
-        [TestMethod]
+        [Test]
         public void StripHTMLTags()
         {
             string tag = "<p>HEJ</p>";
