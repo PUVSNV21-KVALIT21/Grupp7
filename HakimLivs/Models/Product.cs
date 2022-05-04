@@ -22,7 +22,7 @@ namespace HakimLivs.Models
         [Required]
         public string Origin { get; set; }
         [Column(TypeName = "smalldatetime")]
-        public DateTime ExpirationDate { get; set; }
+        public DateTime? ExpirationDate { get; set; }
         public int Stock { get; set; }
         [Required]
         public string UnitType { get; set; }

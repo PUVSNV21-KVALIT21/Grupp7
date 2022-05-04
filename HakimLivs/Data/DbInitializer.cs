@@ -22,7 +22,7 @@ namespace HakimLivs.Data
         public string title { get; set; }
         public Body body { get; set; }
         public List<Category> computed_categories { get; set; }
-        public Brand computed_brand { get; set; }
+        public Brand? computed_brand { get; set; }
         public List<Variation> computed_variations { get; set; }
 
     }
@@ -39,7 +39,7 @@ namespace HakimLivs.Data
 
     public class Brand
     {
-        public string name { get; set; }
+        public string? name { get; set; }
     }
 
     public class Variation
@@ -47,6 +47,11 @@ namespace HakimLivs.Data
         public List<Image> computed_images { get; set; }
         public Price normal_price { get; set; }
         public RPrice resolved_price { get; set; }
+        public List<DiscountPrice> prices { get; set; }
+        public string country_of_origin_full { get; set; }
+        public string best_before { get; set; }
+        public int stock { get; set; }
+        public Measurement measurement { get; set; }
     }
 
     public class Image
@@ -61,12 +66,23 @@ namespace HakimLivs.Data
 
     public class Price
     {
-        public double number { get; set; }
+        public string number { get; set; }
     }
 
     public class RPrice
     {
-        public double number { get; set; }
+        public string number { get; set; }
+    }
+
+    public class DiscountPrice
+    {
+        public string number { get; set; }
+    }
+
+    public class Measurement
+    {
+        public string unit { get; set; }
+        public string number { get; set; }
     }
 
 
@@ -223,39 +239,46 @@ namespace HakimLivs.Data
 
                                     string category = item.attributes.computed_categories[0].name;
 
-                                    string brand = item.attributes.computed_brand.name;
+                                    string brand = "";
+                                    if (item.attributes.computed_brand != null)
+                                    {
+                                        brand = item.attributes.computed_brand.name;
+                                    }
                                     string image = item.attributes.computed_variations[0].computed_images[0].styles.catalog;
 
                                     double price = 0;
-                                    string p = item.attributes.computed_variations[0].normal_price.number.ToString();
-                                    if (p != null && p != "")
+                                    if (item.attributes.computed_variations[0].normal_price != null)
                                     {
-                                        price = double.Parse(p);
+                                        string p = item.attributes.computed_variations[0].normal_price.number ?? "";
+                                        if (p != null && p != "")
+                                        {
+                                            price = Convert.ToDouble(p);
+                                        }
                                     }
                                     else
                                     {
-                                        price = double.Parse(item.attributes.computed_variations[0].resolved_price.number.ToString());
+                                        price = Convert.ToDouble(item.attributes.computed_variations[0].resolved_price.number);
                                     }
 
-                                    //double? discountPrice = null;
-                                    //string discount = item.SelectToken("attributes.computed_variations[0]" +
-                                    //    ".prices[1].price.number")?.ToString() ?? "";
-                                    //if (discount != null && discount != "")
-                                    //{
-                                    //    discountPrice = double.Parse(discount);
-                                    //}
+                                    double? discountPrice = null;
+                                    string discount = item.attributes.computed_variations[0].prices[0].number;
+                                    if (discount != null && discount != "")
+                                    {
+                                        discountPrice = Convert.ToDouble(discount);
+                                    }
 
-                                    //string origin = item.SelectToken("attributes.computed_variations[0]" +
-                                    //    ".country_of_origin_full")?.ToString() ?? "";
-                                    //var expirationDate = DateTime.Parse(item.SelectToken("attributes.computed_variations[0]" +
-                                    //    ".best_before")?.ToString() ?? DateTime.Now.ToString());
-                                    //int stock = int.Parse(item.SelectToken("attributes.computed_variations[0]" +
-                                    //    ".stock")?.ToString() ?? "0");
-                                    //string unitType = item.SelectToken("attributes.computed_variations[0]" +
-                                    //    ".measurement.unit")?.ToString() ?? "";
-                                    //double unitValue = double.Parse(item.SelectToken("attributes.computed_variations[0]" +
-                                    //    ".measurement.number")?.ToString() ?? "0");
-                                    //double comparisonPrice = 1 / unitValue * price;
+                                    string origin = item.attributes.computed_variations[0].country_of_origin_full;
+
+                                    DateTime? expirationDate = null;
+                                    if (item.attributes.computed_variations[0].best_before != null)
+                                    {
+                                        expirationDate = DateTime.Parse(item.attributes.computed_variations[0].best_before);
+                                    }
+
+                                    int stock = item.attributes.computed_variations[0].stock;
+                                    string unitType = item.attributes.computed_variations[0].measurement.unit;
+                                    double unitValue = double.Parse(item.attributes.computed_variations[0].measurement.number);
+                                    double comparisonPrice = 1 / unitValue * price;
 
                                     var product = new Product
                                     {
@@ -265,15 +288,16 @@ namespace HakimLivs.Data
                                         Brand = brand,
                                         Image = image,
                                         Price = price,
-                                        //DiscountPrice = discountPrice,
-                                        //ComparisonPrice = comparisonPrice,
-                                        //Origin = origin,
-                                        //ExpirationDate = expirationDate,
-                                        //Stock = stock,
-                                        //UnitType = unitType,
-                                        //UnitValue = unitValue
+                                        DiscountPrice = discountPrice,
+                                        ComparisonPrice = comparisonPrice,
+                                        Origin = origin,
+                                        ExpirationDate = expirationDate,
+                                        Stock = stock,
+                                        UnitType = unitType,
+                                        UnitValue = unitValue
                                     };
-                                    database.Products.Add(product);
+                                    
+                                    database.Products.Add(product);                              
                                 }
                                 await database.SaveChangesAsync();
                             }
