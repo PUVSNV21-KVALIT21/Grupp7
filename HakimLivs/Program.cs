@@ -1,4 +1,5 @@
 using HakimLivs.Data;
+using HakimLivs.Utilities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
