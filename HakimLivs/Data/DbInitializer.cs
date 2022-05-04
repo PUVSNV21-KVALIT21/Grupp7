@@ -1,11 +1,75 @@
 ﻿using HakimLivs.Models;
 using HakimLivs.Utilities;
 using Microsoft.AspNetCore.Identity;
-using Newtonsoft.Json.Linq;
+//using Newtonsoft.Json.Linq;
 using System.Globalization;
+using System.Text.Json;
 
 namespace HakimLivs.Data
-{
+{    
+    public class HakimData
+    {
+        public List<DataObject> data { get; set; }
+    }
+
+    public class DataObject
+    {
+        public Attribute attributes { get; set; }
+    }
+
+    public class Attribute
+    {
+        public string title { get; set; }
+        public Body body { get; set; }
+        public List<Category> computed_categories { get; set; }
+        public Brand computed_brand { get; set; }
+        public List<Variation> computed_variations { get; set; }
+
+    }
+
+    public class Body
+    {
+        public string value { get; set; }
+    }
+
+    public class Category
+    {
+        public string name { get; set; }
+    }
+
+    public class Brand
+    {
+        public string name { get; set; }
+    }
+
+    public class Variation
+    {
+        public List<Image> computed_images { get; set; }
+        public Price normal_price { get; set; }
+        public RPrice resolved_price { get; set; }
+    }
+
+    public class Image
+    {
+        public Style styles { get; set; }
+    }
+
+    public class Style
+    {
+        public string catalog { get; set; }
+    }
+
+    public class Price
+    {
+        public double number { get; set; }
+    }
+
+    public class RPrice
+    {
+        public double number { get; set; }
+    }
+
+
     public static class DbInitializer
     {
 
@@ -146,54 +210,52 @@ namespace HakimLivs.Data
                             string data = await content.ReadAsStringAsync();
                             if (data != null)
                             {
-                                var dataObj = JObject.Parse(data);
-                                var listObjects = dataObj.GetValue("data")?.ToList();
+                                var dataObj = JsonSerializer.Deserialize<HakimData>(data);
+                                //var listObjects = dataObj.Name;
+                                Console.WriteLine($"Name: {dataObj.data[0].attributes.title}");
 
-                                foreach (var item in listObjects!)
+                                foreach (var item in dataObj.data)
                                 {
-                                    string name = item.SelectToken("attributes.title")?.ToString() ?? "";
+                                    string name = item.attributes.title;
 
-                                    string d = item.SelectToken("attributes.body.value")?.ToString() ?? "";
+                                    string d = item.attributes.body.value;
                                     string description = Utils.StripHTML(d);
 
-                                    string category = item.SelectToken("attributes.computed_categories[0].name")?.ToString() ?? "";
+                                    string category = item.attributes.computed_categories[0].name;
 
-                                    string brand = item.SelectToken("attributes.computed_brand.name")?.ToString() ?? "";
-                                    string image = item.SelectToken("attributes.computed_variations[0]" +
-                                        ".computed_images[0].styles.catalog")?.ToString() ?? "";
+                                    string brand = item.attributes.computed_brand.name;
+                                    string image = item.attributes.computed_variations[0].computed_images[0].styles.catalog;
 
                                     double price = 0;
-                                    string p = item.SelectToken("attributes.computed_variations[0]" +
-                                        ".normal_price.number")?.ToString() ?? "";
+                                    string p = item.attributes.computed_variations[0].normal_price.number.ToString();
                                     if (p != null && p != "")
                                     {
                                         price = double.Parse(p);
                                     }
                                     else
                                     {
-                                        price = double.Parse(item.SelectToken("attributes.computed_variations[0]" +
-                                        ".resolved_price.number")?.ToString() ?? "0");
+                                        price = double.Parse(item.attributes.computed_variations[0].resolved_price.number.ToString());
                                     }
 
-                                    double? discountPrice = null;
-                                    string discount = item.SelectToken("attributes.computed_variations[0]" +
-                                        ".prices[1].price.number")?.ToString() ?? "";
-                                    if (discount != null && discount != "")
-                                    {
-                                        discountPrice = double.Parse(discount);
-                                    }
+                                    //double? discountPrice = null;
+                                    //string discount = item.SelectToken("attributes.computed_variations[0]" +
+                                    //    ".prices[1].price.number")?.ToString() ?? "";
+                                    //if (discount != null && discount != "")
+                                    //{
+                                    //    discountPrice = double.Parse(discount);
+                                    //}
 
-                                    string origin = item.SelectToken("attributes.computed_variations[0]" +
-                                        ".country_of_origin_full")?.ToString() ?? "";
-                                    var expirationDate = DateTime.Parse(item.SelectToken("attributes.computed_variations[0]" +
-                                        ".best_before")?.ToString() ?? DateTime.Now.ToString());
-                                    int stock = int.Parse(item.SelectToken("attributes.computed_variations[0]" +
-                                        ".stock")?.ToString() ?? "0");
-                                    string unitType = item.SelectToken("attributes.computed_variations[0]" +
-                                        ".measurement.unit")?.ToString() ?? "";
-                                    double unitValue = double.Parse(item.SelectToken("attributes.computed_variations[0]" +
-                                        ".measurement.number")?.ToString() ?? "0");
-                                    double comparisonPrice = 1/unitValue * price;
+                                    //string origin = item.SelectToken("attributes.computed_variations[0]" +
+                                    //    ".country_of_origin_full")?.ToString() ?? "";
+                                    //var expirationDate = DateTime.Parse(item.SelectToken("attributes.computed_variations[0]" +
+                                    //    ".best_before")?.ToString() ?? DateTime.Now.ToString());
+                                    //int stock = int.Parse(item.SelectToken("attributes.computed_variations[0]" +
+                                    //    ".stock")?.ToString() ?? "0");
+                                    //string unitType = item.SelectToken("attributes.computed_variations[0]" +
+                                    //    ".measurement.unit")?.ToString() ?? "";
+                                    //double unitValue = double.Parse(item.SelectToken("attributes.computed_variations[0]" +
+                                    //    ".measurement.number")?.ToString() ?? "0");
+                                    //double comparisonPrice = 1 / unitValue * price;
 
                                     var product = new Product
                                     {
@@ -203,13 +265,13 @@ namespace HakimLivs.Data
                                         Brand = brand,
                                         Image = image,
                                         Price = price,
-                                        DiscountPrice = discountPrice,
-                                        ComparisonPrice = comparisonPrice,
-                                        Origin = origin,
-                                        ExpirationDate = expirationDate,
-                                        Stock = stock,
-                                        UnitType = unitType,
-                                        UnitValue = unitValue
+                                        //DiscountPrice = discountPrice,
+                                        //ComparisonPrice = comparisonPrice,
+                                        //Origin = origin,
+                                        //ExpirationDate = expirationDate,
+                                        //Stock = stock,
+                                        //UnitType = unitType,
+                                        //UnitValue = unitValue
                                     };
                                     database.Products.Add(product);
                                 }
