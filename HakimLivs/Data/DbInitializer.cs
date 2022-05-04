@@ -1,7 +1,6 @@
 ﻿using HakimLivs.Models;
 using HakimLivs.Utilities;
 using Microsoft.AspNetCore.Identity;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Globalization;
 

@@ -1,9 +1,11 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HakimLivs", "HakimLivs\HakimLivs.csproj", "{A4BFDBEF-918E-4FDA-AAF1-8A86D413730D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{A4DE7C77-9434-4428-86AF-66D5C3EBA543}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{A4BFDBEF-918E-4FDA-AAF1-8A86D413730D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4BFDBEF-918E-4FDA-AAF1-8A86D413730D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A4BFDBEF-918E-4FDA-AAF1-8A86D413730D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4DE7C77-9434-4428-86AF-66D5C3EBA543}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4DE7C77-9434-4428-86AF-66D5C3EBA543}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4DE7C77-9434-4428-86AF-66D5C3EBA543}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4DE7C77-9434-4428-86AF-66D5C3EBA543}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
