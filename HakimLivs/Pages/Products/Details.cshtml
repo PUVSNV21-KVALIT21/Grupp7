@@ -1,0 +1,53 @@
+﻿@page
+@model HakimLivs.Pages.Products.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+<div class="row">
+    <div class="col">        
+        <img src="@Model.Product.Image" class="card-img-top" style="height: 100%; width: 100%; object-fit: contain;" alt="@Model.Product.Name">                   
+    </div>
+    <div class="col p-3">
+        <div class="card h-100">
+            <div class="card-body">
+                <h1 class="card-title">@Model.Product.Name</h1>
+                <h2 class="card-subtitle fs-4 d-inline">@Model.Product.Brand</h2>
+                <span class="fs-5"> | @Model.Product.UnitValue @Model.Product.UnitType</span>
+                <p class="card-text pt-3">@Model.Product.Description</p>
+                
+                @if(@Model.Product.DiscountPrice == null || @Model.Product.DiscountPrice == 0){
+                    <span class="fw-bold row justify-content-center pb-3" style="font-size: 5rem;">@Html.DisplayFor(m => Model.Product.Price):-</span>
+                }
+                else
+                {
+                    <h5 class="card-title">@Model.Product.DiscountPrice kr</h5>
+                }
+
+                <button type="button" class="btn btn-primary btn-block" style="width:100%;">Köp</button>
+                <hr />
+                    <ul style="list-style: none">
+                        <li>
+                            <b>Jämförpris:</b> @Model.Product.ComparisonPrice kr/st
+                        </li>
+                        <li>
+                            <b>Bäst före:</b> @Model.Product.ExpirationDate
+                        </li>
+                        <li>
+                            <b>Antal kvar:</b> @Model.Product.Stock
+                        </li>
+                    </ul>
+                <hr />
+            </div>
+        </div>
+    </div>
+    </div>
+
+<hr />
+
+<div>
+    <a asp-page="./Delete" asp-route-id="@Model.Product.ID">Ta bort</a> |
+    <a asp-page="./Edit" asp-route-id="@Model.Product.ID">Redigera</a> |
+</div>
