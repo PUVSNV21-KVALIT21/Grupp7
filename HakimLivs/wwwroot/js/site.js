@@ -24,5 +24,4 @@ function addProductToLocalStorage(id) {
     localStorage.setItem('cartQuantity', newCartQuantity)
 
     updateCartIcon()
-
 }
