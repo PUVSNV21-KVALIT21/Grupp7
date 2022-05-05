@@ -19,7 +19,12 @@ https://g7-wa-hakimlivs-prod.azurewebsites.net/ | Prod | Production | [![Prod](h
 #### Razor pages
 
 * Index.cshtml: landing page.
+* Products: Create, Edit, Details, Delete.
 
+#### LocalStorage
+
+* Product added to cart: (<productID>, <quantity>)
+* Number of products in cart: ('cartQuantity', <quantity>)
 
 ### Databas
 
