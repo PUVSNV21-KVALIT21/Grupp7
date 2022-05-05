@@ -26,7 +26,7 @@
                     <h5 class="card-title">@Model.Product.DiscountPrice kr</h5>
                 }
 
-                <button type="button" class="btn btn-primary btn-block" style="width:100%;">Köp</button>
+                <button type="button" onclick="addProductToLocalStorage(@Model.Product.ID)" class="btn btn-primary btn-block" style="width:100%;">Köp</button>
                 <hr />
                     <ul style="list-style: none">
                         <li>
