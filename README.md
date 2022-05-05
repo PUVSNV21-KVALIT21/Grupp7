@@ -14,7 +14,7 @@ https://g7-wa-hakimlivs-prod.azurewebsites.net/ | Prod | Production | [![Prod](h
 
 ### Web App
 
-.NET 6 individual identity
+ASP.NET Razor Pages Web Application .NET 6, individual accounts
 
 #### Razor pages
 
@@ -23,8 +23,8 @@ https://g7-wa-hakimlivs-prod.azurewebsites.net/ | Prod | Production | [![Prod](h
 
 #### LocalStorage
 
-* Product added to cart: (<productID>, <quantity>)
-* Number of products in cart: ('cartQuantity', <quantity>)
+* Product added to cart: `(<productID>, <quantity>)`
+* Number of products in cart: `('cartQuantity', <quantity>)`
 
 ### Databas
 
