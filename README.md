@@ -14,7 +14,7 @@ https://g7-wa-hakimlivs-prod.azurewebsites.net/ | Prod | Production | [![Prod](h
 
 ### Web App
 
-.NET 6 individual identity
+ASP.NET Razor Pages Web Application .NET 6, individual accounts
 
 #### Razor pages
 
