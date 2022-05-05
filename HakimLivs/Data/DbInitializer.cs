@@ -75,12 +75,17 @@ namespace HakimLivs.Data
 
     public class DiscountPrice
     {
-        public string number { get; set; }
+        public DPrice price { get; set; }
     }
 
     public class Measurement
     {
         public string unit { get; set; }
+        public string number { get; set; }
+    }
+
+    public class DPrice
+    {
         public string number { get; set; }
     }
 
@@ -260,7 +265,7 @@ namespace HakimLivs.Data
                                     }
 
                                     double? discountPrice = null;
-                                    string discount = item.attributes.computed_variations[0].prices[0].number;
+                                    string discount = item.attributes.computed_variations[0].prices[0].price.number;
                                     if (discount != null && discount != "")
                                     {
                                         discountPrice = Convert.ToDouble(discount);
