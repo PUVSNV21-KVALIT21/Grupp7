@@ -24,7 +24,7 @@
                     }                    
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">
-                            <a><a asp-page="./Products/Details" asp-route-id="@product.ID">@product.Name</a>
+                            <a asp-page="./Products/Details" asp-route-id="@product.ID">@product.Name</a>
                          </li>
                         <li class="list-group-item">@product.Brand</li>
                         <li class="list-group-item">@($"{product.UnitValue}{product.UnitType}")</li>
