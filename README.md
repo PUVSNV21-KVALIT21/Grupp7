@@ -23,8 +23,8 @@ ASP.NET Razor Pages Web Application .NET 6, individual accounts
 
 #### LocalStorage
 
-* Product added to cart: (<productID>, <quantity>)
-* Number of products in cart: ('cartQuantity', <quantity>)
+* Product added to cart: `(<productID>, <quantity>)`
+* Number of products in cart: `('cartQuantity', <quantity>)`
 
 ### Databas
 
