@@ -1,4 +1,4 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
@@ -8,7 +8,7 @@ function updateCartIcon() {
     if (!cartQuantity) {
         localStorage.setItem('cartQuantity', 0)
     }
-    document.getElementById('cart-icon').textContent = cartQuantity
+    document.getElementById('cart-counter').textContent = cartQuantity
 }
 
 function addProductToLocalStorage(id) {
