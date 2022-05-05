@@ -8,7 +8,7 @@ function updateCartIcon() {
     if (!cartQuantity) {
         localStorage.setItem('cartQuantity', 0)
     }
-    document.getElementById('cart-icon').textContent = cartQuantity
+    document.getElementById('cart-counter').textContent = cartQuantity
 }
 
 function addProductToLocalStorage(id) {
