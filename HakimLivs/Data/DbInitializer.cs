@@ -1,7 +1,6 @@
 ﻿using HakimLivs.Models;
 using HakimLivs.Utilities;
 using Microsoft.AspNetCore.Identity;
-//using Newtonsoft.Json.Linq;
 using System.Globalization;
 using System.Text.Json;
 
@@ -98,10 +97,10 @@ namespace HakimLivs.Data
         {
             CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
 
-            //if (database.Products.Any())
-            //{
-            //    return;
-            //}
+            if (database.Products.Any())
+            {
+                return;
+            }
 
             await GetProductsAsync(database);
 
