@@ -100,8 +100,6 @@ namespace HakimLivs.Data
         /// <param name="userManager">The user manager.</param>
         public static async Task InitializeAsync(ApplicationDbContext database, UserManager<IdentityUser> userManager)
         {
-            CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
-
             if (database.Products.Any())
             {
                 return;
