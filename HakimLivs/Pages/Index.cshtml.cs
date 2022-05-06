@@ -1,5 +1,6 @@
 ﻿using HakimLivs.Data;
 using HakimLivs.Models;
+using HakimLivs.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
