@@ -27,7 +27,7 @@
                             <a asp-page="./Products/Details" asp-route-id="@product.ID">@product.Name</a>
                          </li>
                         <li class="list-group-item">@product.Brand</li>
-                        <li class="list-group-item">@($"{product.UnitValue} {product.UnitType}")</li>
+                        <li class="list-group-item">@Utils.DisplayUnitvalue(product.UnitValue) @product.UnitType</li>
                         @if(product.DiscountPrice != null)
                         {
                            <li class="list-group-item">@Utils.GetProductDiscountPercentage(product)%</li>

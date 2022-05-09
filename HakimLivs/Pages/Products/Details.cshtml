@@ -15,25 +15,25 @@
             <div class="card-body">
                 <h1 class="card-title">@Model.Product.Name</h1>
                 <h2 class="card-subtitle fs-4 d-inline">@Model.Product.Brand</h2>
-                <span class="fs-5"> | @Model.Product.UnitValue @Model.Product.UnitType</span>
-                <p class="card-text pt-3">@Model.Product.Description</p>
+                <span class="fs-5"> | @Utils.DisplayUnitvalue(Model.Product.UnitValue) @Model.Product.UnitType</span>
+                <p class="card-text pt-3">@Utils.DecodeHTML(Model.Product.Description)</p>
                 
                 @if(@Model.Product.DiscountPrice == null || @Model.Product.DiscountPrice == 0){
-                    <span class="fw-bold row justify-content-center pb-3" style="font-size: 5rem;">@Html.DisplayFor(m => Model.Product.Price):-</span>
+                    <span class="fw-bold row justify-content-center pb-3" style="font-size: 5rem;">@Html.DisplayFor(m => Utils.DisplayPrice(Model.Product.Price))</span>
                 }
                 else
                 {
-                    <h5 class="card-title">@Model.Product.DiscountPrice kr</h5>
+                    <h5 class="card-title">@Utils.DisplayPrice(Model.Product.DiscountPrice)</h5>
                 }
 
                 <button type="button" onclick="addProductToLocalStorage(@Model.Product.ID)" class="btn btn-primary btn-block" style="width:100%;">Köp</button>
                 <hr />
                     <ul style="list-style: none">
                         <li>
-                            <b>Jämförpris:</b> @Model.Product.ComparisonPrice kr/st
+                            <b>Jämförpris:</b> @Utils.DisplayPrice(Model.Product.ComparisonPrice)/@Model.Product.UnitType
                         </li>
                         <li>
-                            <b>Bäst före:</b> @Model.Product.ExpirationDate
+                            <b>Bäst före:</b> @Model.Product.ExpirationDate?.ToString("yyyy-MM-dd")
                         </li>
                         <li>
                             <b>Antal kvar:</b> @Model.Product.Stock
