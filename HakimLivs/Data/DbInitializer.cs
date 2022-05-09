@@ -119,8 +119,8 @@ namespace HakimLivs.Data
                     Email = "hakim@example.com",
                     EmailConfirmed = true,
                 };
-                IdentityUser userHakim = hakim;
 
+                IdentityUser userHakim = hakim;
                 await userManager.CreateAsync(userHakim, password);
                 database.Users.Add(hakim);
 
@@ -134,6 +134,7 @@ namespace HakimLivs.Data
                     Email = "user@example.com",
                     EmailConfirmed = true
                 };
+
                 IdentityUser iUser1 = user;
                 await userManager.CreateAsync(iUser1, password);
                 database.Users.Add(user);
@@ -148,6 +149,7 @@ namespace HakimLivs.Data
                     Email = "user2@example.com",
                     EmailConfirmed = true
                 };
+
                 IdentityUser iUser2 = user2;
                 await userManager.CreateAsync(iUser2, password);
                 database.Users.Add(user2);
@@ -162,6 +164,7 @@ namespace HakimLivs.Data
                     Email = "user3@example.com",
                     EmailConfirmed = true
                 };
+
                 IdentityUser iUser3 = user3;
                 await userManager.CreateAsync(iUser3, password);
                 database.Users.Add(user3);
@@ -176,6 +179,7 @@ namespace HakimLivs.Data
                     Email = "user4@example.com",
                     EmailConfirmed = true
                 };
+
                 IdentityUser iUser4 = user4;
                 await userManager.CreateAsync(iUser4, password);
                 database.Users.Add(user4);
@@ -190,6 +194,7 @@ namespace HakimLivs.Data
                     Email = "user5@example.com",
                     EmailConfirmed = true
                 };
+
                 IdentityUser iUser5 = user5;
                 await userManager.CreateAsync(iUser5, password);
                 database.Users.Add(user5);
