@@ -1,44 +1,68 @@
-﻿@page
+﻿@page "{id?}"
 @model IndexModel
 @{
     ViewData["Title"] = "Hakim Livs!";
 }
 
-<div>
-    <a asp-page="Products/Create">Lägg till ny produkt</a>
-</div>
+<div class="container">
+    <div class="row">
 
-<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 justify-content-center">
-    @foreach (var product in Model.Products)
-    {
-        <div class="col p-3">
-            <div class="card h-100 text-center">
-                <img src="@product.Image" class="card-img-top align-self-center p-3" style="height: 50%; width: 50%; object-fit: contain;" alt="@product.Name">
-                <div class="card-body">
-                    @if(product.DiscountPrice == null){
-                        <h5 class="card-title">@Utils.DisplayPrice(product.Price)</h5>
-                    }
-                    else
-                    {
-                        <h5 class="card-title">@Utils.DisplayPrice(product.DiscountPrice)</h5>
-                    }                    
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                            <a asp-page="./Products/Details" asp-route-id="@product.ID">@product.Name</a>
-                         </li>
-                        <li class="list-group-item">@product.Brand</li>
-                        <li class="list-group-item">@Utils.DisplayUnitvalue(product.UnitValue) @product.UnitType</li>
-                        @if(product.DiscountPrice != null)
-                        {
-                           <li class="list-group-item">@Utils.GetProductDiscountPercentage(product)%</li>
-                        }
-                    </ul>
-                </div>
-                <div class="card-footer">
-                    <button type="button" onclick="addProductToLocalStorage(@product.ID)" class="btn btn-primary btn-block" style="width:100%;">Köp</button>
-                </div>
+        <div class="col-md-2">
+            <div class="list-group list-group-flush">
+                @foreach (var category in Model.Categories)
+                {
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-page="/Index" asp-route-id="@category">@category</a>
+                }
             </div>
         </div>
-    }
-</div>
 
+        <div class="col-md">
+            <div>
+                <a asp-page="Products/Create">Lägg till ny produkt</a>
+            </div>
+
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 justify-content-center">
+                @foreach (var product in Model.Products)
+                {
+                    <div class="col p-3">
+                        <div class="card h-100 text-center">
+                            <img src="@product.Image"
+                             class="card-img-top align-self-center p-3"
+                             style="height: 50%; width: 50%; object-fit: contain;"
+                             alt="@product.Name">
+                            <div class="card-body">
+                                @if (product.DiscountPrice == null)
+                                {
+                                    <h5 class="card-title">@Utils.DisplayPrice(product.Price)</h5>
+                                }
+                                else
+                                {
+                                    <h5 class="card-title">@Utils.DisplayPrice(product.DiscountPrice)</h5>
+                                }
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <a asp-page="./Products/Details" asp-route-id="@product.ID">@product.Name</a>
+                                    </li>
+                                    <li class="list-group-item">@product.Brand</li>
+                                    <li class="list-group-item">@Utils.DisplayUnitvalue(product.UnitValue) @product.UnitType</li>
+                                    @if (product.DiscountPrice != null)
+                                    {
+                                        <li class="list-group-item">@Utils.GetProductDiscountPercentage(product)%</li>
+                                    }
+                                </ul>
+                            </div>
+                            <div class="card-footer">
+                                <button type="button"
+                                    onclick="addProductToLocalStorage(@product.ID)"
+                                    class="btn btn-primary btn-block"
+                                    style="width:100%;">
+                                    Köp
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

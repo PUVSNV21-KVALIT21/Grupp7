@@ -18,7 +18,7 @@ namespace HakimLivs.Models
         public string Image { get; set; }
         public double Price { get; set; }
         public double? DiscountPrice { get; set; }
-        public double ComparisonPrice { get; set; }
+        public double? ComparisonPrice { get; set; }
         [Required]
         public string Origin { get; set; }
         [Column(TypeName = "smalldatetime")]
