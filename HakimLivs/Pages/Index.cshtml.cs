@@ -16,14 +16,24 @@ namespace HakimLivs.Pages
         {
             _context = context;
             _logger = logger;
-
         }
 
         public List<Product> Products { get; set; }
-
-        public async Task OnGetAsync()
+        public List<Product> CategorizedProducts { get; set; }
+        public List<string> Categories { get; set; }
+        public async Task OnGetAsync(string id)
         {
-            Products = await _context.Products.ToListAsync();
+            Categories = await _context.Products.Select(c => c.Category).Distinct().ToListAsync();
+            if (id == null)
+            {
+                Products = await _context.Products.ToListAsync();
+            }
+            else
+            {
+                Products = await _context.Products.Where(c => c.Category == id).ToListAsync();
+            }
+
+
         }
     }
 }
