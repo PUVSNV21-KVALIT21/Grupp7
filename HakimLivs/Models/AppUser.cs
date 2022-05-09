@@ -4,10 +4,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace HakimLivs.Models
 {
-    public class User
+    public class AppUser : IdentityUser
     {
-        public int ID { get; set; }
-        public IdentityUser IdentityUser { get; set; }
         [Required]
         public string FirstName { get; set; }
         [Required]
