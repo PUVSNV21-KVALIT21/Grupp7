@@ -17,7 +17,7 @@ namespace HakimLivs.Tests
 
             string test = Utils.DisplayPrice(price);
 
-            Assert.AreEqual(test, "15 kr");
+            Assert.AreEqual(test, "15:-");
         }
 
         [TestMethod]
