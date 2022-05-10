@@ -32,6 +32,7 @@ namespace HakimLivs.Pages.Register
 		{
             //code from https://stackoverflow.com/a/6415638
             string AllowedChars = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$";
+
             if (Regex.IsMatch(password, AllowedChars))
             {
                 if (password == confirmPassword)
@@ -43,11 +44,11 @@ namespace HakimLivs.Pages.Register
                         Address = new Address { Street = appUser.Address.Street, ZipCode = appUser.Address.ZipCode, City = appUser.Address.Street },
                         Email = appUser.Email,
                         EmailConfirmed = true,
+                        UserName = appUser.Email
                     };
-
                     IdentityUser User = user;
                     await _userManager.CreateAsync(User, password);
-                    database.Users.Add(user);
+                    //database.Users.Add(user);
 
                     await database.SaveChangesAsync();
                     return RedirectToPage("../Index");
