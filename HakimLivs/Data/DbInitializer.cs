@@ -116,11 +116,11 @@ namespace HakimLivs.Data
                     IsAdmin = true,
                     Email = "hakim@example.com",
                     EmailConfirmed = true,
+                    UserName = "hakim@example.com"
                 };
 
                 IdentityUser userHakim = hakim;
                 await userManager.CreateAsync(userHakim, password);
-                database.Users.Add(hakim);
 
                 //// User 1
 
@@ -130,12 +130,13 @@ namespace HakimLivs.Data
                     LastName = "Testsson",
                     Address = new Address { Street = "Gatan 1", ZipCode = "12321", City = "Stockholm" },
                     Email = "user@example.com",
-                    EmailConfirmed = true
+                    EmailConfirmed = true,
+                    UserName = "user@example.com"
+
                 };
 
                 IdentityUser iUser1 = user;
                 await userManager.CreateAsync(iUser1, password);
-                database.Users.Add(user);
 
                 //// User 2
 
@@ -145,12 +146,13 @@ namespace HakimLivs.Data
                     LastName = "Hellström",
                     Address = new Address { Street = "Feskekörka", ZipCode = "66655", City = "Göteborg" },
                     Email = "user2@example.com",
-                    EmailConfirmed = true
+                    EmailConfirmed = true,
+                    UserName = "user2@example.com"
+
                 };
 
                 IdentityUser iUser2 = user2;
                 await userManager.CreateAsync(iUser2, password);
-                database.Users.Add(user2);
 
                 //// User 3
 
@@ -160,12 +162,12 @@ namespace HakimLivs.Data
                     LastName = "Spöksson",
                     Address = new Address { Street = "Gatstigen 5", ZipCode = "13467", City = "Luleå" },
                     Email = "user3@example.com",
-                    EmailConfirmed = true
+                    EmailConfirmed = true,
+                    UserName = "user3@example.com"
                 };
 
                 IdentityUser iUser3 = user3;
                 await userManager.CreateAsync(iUser3, password);
-                database.Users.Add(user3);
 
                 //// User 4
 
@@ -175,12 +177,12 @@ namespace HakimLivs.Data
                     LastName = "Boll",
                     Address = new Address { Street = "Gränd 7", ZipCode = "99887", City = "Malmö" },
                     Email = "user4@example.com",
-                    EmailConfirmed = true
+                    EmailConfirmed = true,
+                    UserName = "user4@example.com"
                 };
 
                 IdentityUser iUser4 = user4;
                 await userManager.CreateAsync(iUser4, password);
-                database.Users.Add(user4);
 
                 //// User 5
 
@@ -190,13 +192,12 @@ namespace HakimLivs.Data
                     LastName = "Lisa",
                     Address = new Address { Street = "Rue de Rivoli", ZipCode = "75001", City = "Paris" },
                     Email = "user5@example.com",
-                    EmailConfirmed = true
+                    EmailConfirmed = true,
+                    UserName = "user5@example.com"
                 };
 
                 IdentityUser iUser5 = user5;
                 await userManager.CreateAsync(iUser5, password);
-                database.Users.Add(user5);
-
                 await database.SaveChangesAsync();
             }
         }
