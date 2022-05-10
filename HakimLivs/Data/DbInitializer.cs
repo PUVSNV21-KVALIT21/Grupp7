@@ -75,7 +75,7 @@ namespace HakimLivs.Data
 
     public class DiscountPrice
     {
-        public string number { get; set; }
+        public Price price { get; set; }
     }
 
     public class Measurement
@@ -220,7 +220,6 @@ namespace HakimLivs.Data
                             if (data != null)
                             {
                                 var dataObj = JsonSerializer.Deserialize<HakimData>(data);
-                                Console.WriteLine($"Name: {dataObj.data[0].attributes.title}");
 
                                 foreach (var item in dataObj.data)
                                 {
