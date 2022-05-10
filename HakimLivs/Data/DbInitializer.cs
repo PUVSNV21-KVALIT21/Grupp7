@@ -252,7 +252,7 @@ namespace HakimLivs.Data
                                     }
 
                                     double? discountPrice = null;
-                                    string discount = item.attributes.computed_variations[0].prices[0].price.number;
+                                    string discount = item.attributes.computed_variations[0].prices[0].number;
                                     if (discount != null && discount != "")
                                     {
                                         discountPrice = Convert.ToDouble(discount);
