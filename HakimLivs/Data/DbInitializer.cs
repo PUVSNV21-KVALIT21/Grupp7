@@ -269,7 +269,16 @@ namespace HakimLivs.Data
 
                                     int stock = item.attributes.computed_variations[0].stock;
                                     string unitType = item.attributes.computed_variations[0].measurement.unit;
-                                    double unitValue = double.Parse(item.attributes.computed_variations[0].measurement.number);
+                                    double unitValue = 0;
+                                    double unitRaw = double.Parse(item.attributes.computed_variations[0].measurement.number);
+                                    if (unitRaw % 1 == 0)
+                                    {
+                                        unitValue = unitRaw + 0.01;
+                                    }
+                                    else
+                                    {
+                                        unitValue = unitRaw;
+                                    }
                                     double? comparisonPrice = 1 / unitValue * discountPrice;
 
                                     var product = new Product
