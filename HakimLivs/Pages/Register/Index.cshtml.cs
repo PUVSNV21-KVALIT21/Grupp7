@@ -60,20 +60,20 @@ namespace HakimLivs.Pages.Register
                     }
                     else
                     {
-                        Message = "Lösenord matchar inte.";
+                        Message = "LÃ¶senord matchar inte.";
                         return RedirectToPage("./Index", new { Message, appUser });
 
                     }
                 }
                 else
                 {
-                    Message = "Lösenord måste innehålla versaler, gemener, specialtecken(#$^+=!*()@%&) och nummer samt vara längre än 6 tecken";
+                    Message = "LÃ¶senord mÃ¥ste innehÃ¥lla versaler, gemener, specialtecken(#$^+=!*()@%&) och nummer samt vara lÃ¤ngre Ã¤n 6 tecken";
                     return RedirectToPage("./Index", new { Message });
                 }
             }
             else
             {
-                Message = "Email existerar redan, försök med en ny.";
+                Message = "Email existerar redan, fÃ¶rsÃ¶k med en ny.";
                 return RedirectToPage("./Index", new { Message });
             }
         }

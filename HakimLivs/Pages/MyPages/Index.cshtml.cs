@@ -43,12 +43,12 @@ namespace HakimLivs.Pages.MyPages
                 user.UserName = appUser.Email;
 
                 await database.SaveChangesAsync();
-                Message = "Ändringar sparade.";
+                Message = "ï¿½ndringar sparade.";
                 return RedirectToPage("./Index", new { Message, appUser.Id });
             }
             else
             {
-                Message = "Email existerar redan, försök med en ny.";
+                Message = "Email existerar redan, fï¿½rsï¿½k med en ny.";
                 return RedirectToPage("./Index", new { Message });
             }
         }
@@ -69,19 +69,19 @@ namespace HakimLivs.Pages.MyPages
                     var token = await _userManager.GeneratePasswordResetTokenAsync(user);
                     var result = await _userManager.ResetPasswordAsync(user, token, Password);
 
-                    Message = "Nytt lösenord sparat.";
+                    Message = "Nytt lï¿½senord sparat.";
                     return RedirectToPage("./Index", new { Message, appUser });
                 }
                 else
                 {
-                    Message = "Lösenord matchar inte.";
+                    Message = "Lï¿½senord matchar inte.";
                     return RedirectToPage("./Index", new { Message, appUser });
 
                 }
             }
             else
             {
-                Message = "Lösenord måste innehålla versaler, gemener, specialtecken(#$^+=!*()@%&) och nummer samt vara längre än 6 tecken";
+                Message = "Lï¿½senord mï¿½ste innehï¿½lla versaler, gemener, specialtecken(#$^+=!*()@%&) och nummer samt vara lï¿½ngre ï¿½n 6 tecken";
                 return RedirectToPage("./Index", new { Message });
             }
         }
