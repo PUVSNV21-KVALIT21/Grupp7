@@ -2,11 +2,16 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
+@{
+var HttpUser=UserManager.GetUserAsync(User).Result;
+}
+
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
+
     <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Mina sidor</a>
+        <a  class="nav-link text-dark" asp-page="/MyPages/Index" asp-route-id="@HttpUser.Id" title="Manage">Mina sidor</a>
     </li>
     <li class="nav-item">
         <a  class="nav-link text-dark" asp-page="/Admin/Index" title="Manage">Admin</a>
