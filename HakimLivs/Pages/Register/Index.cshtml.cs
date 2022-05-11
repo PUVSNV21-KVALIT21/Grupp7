@@ -28,10 +28,10 @@ namespace HakimLivs.Pages.Register
 
         public async Task OnGet()
         {
-        } 
+        }
 
-		public async Task<IActionResult> OnPostAddAsync(AppUser appUser, string password, string confirmPassword)
-		{
+        public async Task<IActionResult> OnPostAddAsync(AppUser appUser, string password, string confirmPassword)
+        {
             //code from https://stackoverflow.com/a/6415638
             string AllowedChars = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$";
             var emailList = await database.Users.Select(e => e.Email).ToListAsync();
@@ -77,5 +77,5 @@ namespace HakimLivs.Pages.Register
                 return RedirectToPage("./Index", new { Message });
             }
         }
-	}
+    }
 }

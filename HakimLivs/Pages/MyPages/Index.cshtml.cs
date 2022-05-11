@@ -85,5 +85,16 @@ namespace HakimLivs.Pages.MyPages
                 return RedirectToPage("./Index", new { Message });
             }
         }
+
+        //public async Task<IActionResult> OnPostDelete(AppUser appUser)
+        //{
+        //    var user = await database.Users.FirstOrDefaultAsync(u => u.Id == appUser.Id);
+
+        //    database.Users.Remove(user);
+        //    await database.SaveChangesAsync();
+
+
+        //    return RedirectToPage("../Index");
+        //}
     }
 }
