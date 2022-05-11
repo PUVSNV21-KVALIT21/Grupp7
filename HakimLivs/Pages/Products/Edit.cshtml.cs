@@ -9,11 +9,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HakimLivs.Data;
 using HakimLivs.Models;
+using System.Globalization;
 
 namespace HakimLivs.Pages.Products
 {
     public class EditModel : PageModel
     {
+
         private readonly HakimLivs.Data.ApplicationDbContext _context;
 
         public EditModel(HakimLivs.Data.ApplicationDbContext context)

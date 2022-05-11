@@ -5,17 +5,50 @@
 }
 
 <div class="container">
-    <div class="row">
+    <div class="row justify-content-center">
 
-        <div class="col-md-2">
-            <div class="list-group list-group-flush">
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-page="/Admin/Products">Products</a>
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-page="/Admin/Orders">Orders</a>                
-            </div>
+        <div class="col-auto">
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-page="/Admin/Products">Produkter</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-page="/Admin/Orders">Ordrar</a>                
         </div>
 
-        <div class="col-md-2">
-            <h1>Products</h1>
+        <div class="col-8">
+            <h1>Produkter</h1>
+            <div>
+                <a asp-page="Products/Create">Lägg till ny produkt</a>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var product in Model.Products)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(c => product.ID)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(c => product.Name)
+                                </td>
+                                <td>
+                                    <a class="btn btn-primary" asp-page="/Products/Edit" asp-route-id="@product.ID">Edit</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-primary" asp-page="/Products/Delete" asp-route-id="@product.ID">Ta bort</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
