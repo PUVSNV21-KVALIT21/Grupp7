@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using HakimLivs.Data;
 using System.Text.RegularExpressions;
+using Microsoft.EntityFrameworkCore;
 
 namespace HakimLivs.Pages.Register
 {
@@ -32,39 +33,47 @@ namespace HakimLivs.Pages.Register
 		{
             //code from https://stackoverflow.com/a/6415638
             string AllowedChars = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$";
+            var emailList = await database.Users.Select(u => u.Email).ToListAsync();
 
-            if (Regex.IsMatch(password, AllowedChars))
+            if (!emailList.Contains(appUser.Email))
             {
-                if (password == confirmPassword)
+                if (Regex.IsMatch(password, AllowedChars))
                 {
-                    var user = new AppUser
+                    if (password == confirmPassword)
                     {
-                        FirstName = appUser.FirstName,
-                        LastName = appUser.LastName,
-                        Address = new Address { Street = appUser.Address.Street, ZipCode = appUser.Address.ZipCode, City = appUser.Address.Street },
-                        Email = appUser.Email,
-                        EmailConfirmed = true,
-                        UserName = appUser.Email
-                    };
-                    IdentityUser User = user;
-                    await _userManager.CreateAsync(User, password);
-                    //database.Users.Add(user);
+                        var user = new AppUser
+                        {
+                            FirstName = appUser.FirstName,
+                            LastName = appUser.LastName,
+                            Address = new Address { Street = appUser.Address.Street, ZipCode = appUser.Address.ZipCode, City = appUser.Address.Street },
+                            Email = appUser.Email,
+                            EmailConfirmed = true,
+                            UserName = appUser.Email
+                        };
+                        IdentityUser User = user;
+                        await _userManager.CreateAsync(User, password);
 
-                    await database.SaveChangesAsync();
-                    return RedirectToPage("../Index");
+                        await database.SaveChangesAsync();
+                        return RedirectToPage("/Account/Login", new { Area = "Identity" });
+                    }
+                    else
+                    {
+                        Message = "Lösenord matchar inte.";
+                        return RedirectToPage("./Index", new { Message });
+
+                    }
                 }
                 else
                 {
-                    Message = "Lösenord matchar inte.";
-                    return RedirectToPage("./Index", new { Message, appUser });
-
+                    Message = "Lösenord måste innehålla versaler, gemener, specialtecken(#$^+=!*()@%&) och nummer samt vara längre än 6 tecken";
+                    return RedirectToPage("./Index", new { Message });
                 }
             }
             else
             {
-                Message = "Lösenord måste innehålla versaler, gemener, specialtecken(#$^+=!*()@%&) och nummer samt vara längre än 6 tecken";
+                Message = "Email existerar redan, testa en annan";
                 return RedirectToPage("./Index", new { Message });
             }
         }
-	}
+    }
 }
