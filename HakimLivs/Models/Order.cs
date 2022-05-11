@@ -4,7 +4,7 @@
     {
         public int ID { get; set; }
         public AppUser User { get; set; }
-        public string DiscountCode { get; set; }
-
+        public string? DiscountCode { get; set; }
+        public string Status { get; set; } = "Inkommen";
     }
 }
