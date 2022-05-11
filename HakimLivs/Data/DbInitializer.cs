@@ -229,7 +229,7 @@ namespace HakimLivs.Data
                                     string d = item.attributes.body.value;
                                     string description = Utils.StripHTML(d);
 
-                                    string category = item.attributes.computed_categories[0].name;
+                                    string category = item.attributes.computed_categories[1].name;
 
                                     string brand = "";
                                     if (item.attributes.computed_brand != null)

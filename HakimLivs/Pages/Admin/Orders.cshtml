@@ -1,5 +1,5 @@
-﻿@page "{id?}"
-@model HakimLivs.Pages.Admin.IndexModel
+﻿@page
+@model HakimLivs.Pages.Admin.OrdersModel
 @{
     ViewData["Title"] = "Hakim Livs!";
 }
@@ -10,12 +10,12 @@
         <div class="col-md-2">
             <div class="list-group list-group-flush">
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-page="/Admin/Products">Produkter</a>
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-page="/Admin/Orders">Ordrar</a>            
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-page="/Admin/Orders">Ordrar</a>                
             </div>
         </div>
 
-        <div class="col">
-            <h1>Välkommen till Admin!</h1>
+        <div class="col-md-2">
+            <h1>Ordrar</h1>
         </div>
     </div>
 </div>
