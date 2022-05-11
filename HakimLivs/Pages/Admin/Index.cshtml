@@ -1,4 +1,21 @@
-﻿@page
+﻿@page "{id?}"
 @model HakimLivs.Pages.Admin.IndexModel
 @{
+    ViewData["Title"] = "Hakim Livs!";
 }
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-2">
+            <div class="list-group list-group-flush">
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-page="/Admin/Products">Produkter</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-page="/Admin/Orders">Ordrar</a>            
+            </div>
+        </div>
+
+        <div class="col">
+            <h1>Välkommen till Admin!</h1>
+        </div>
+    </div>
+</div>
