@@ -1,0 +1,58 @@
+﻿@page "{id}"
+@model HakimLivs.Pages.Orders.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+<div class="row">
+    <div class="col p-3">
+        <div class="card h-100">
+            <div class="card-body">
+                <h1 class="card-title">#@Model.Order.ID @Model.Order.User.FirstName @Model.Order.User.LastName</h1>
+                <h2 class="card-subtitle fs-4 d-inline">@Model.Order.Status</h2>
+                <form method="post" asp-page-handler="Edit">
+                    <select class="form-select w-25 mb-2 mt-2" asp-for="SelectedStatus">
+                        <option value="none" selected disabled hidden>@Model.Order.Status</option>
+                        <option value="Inkommen">Inkommen</option>
+                        <option value="Pågående">Pågående</option>
+                        <option value="Plockad">Plockad</option>
+                        <option value="Levererad">Levererad</option>
+                        <option value="Betald">Betald</option>
+                    </select>
+                    <button class="btn btn-primary" type="submit">Spara</button>
+                </form>
+                <hr />
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="col-1" scope="col" style="text-align: center;">Plockad</th>
+                                <th class="col-1" scope="col" style="text-align: center;">Antal</th>
+                                <th class="col-auto" scope="col">Produkt</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var orderproducts in Model.OrderProducts)
+                            {
+                                <tr>
+                                    <td style="text-align: center;">
+                                        <input class="form-check-input" type="checkbox">
+                                    </td>
+                                    <td style="text-align: center;">
+                                        @orderproducts.Quantity
+                                    </td>
+                                    <td>
+                                        @orderproducts.Product.Name
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                <hr />
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr />

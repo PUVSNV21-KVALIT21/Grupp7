@@ -1,0 +1,10 @@
+﻿@page "{id}"
+@model HakimLivs.Pages.Orders.DeleteModel
+@{
+    ViewData["Title"] = @Model.Order.ID + ": " + @Model.Order.User.FirstName;
+}
+<h1>@ViewData["Title"]</h1>
+<form method="post" asp-page-handler="Delete">
+    <h2>Är du säker att du vill ta bort beställning nr: @Model.Order.ID från användare: @Model.Order.User.FirstName ?</h2>
+    <button class="btn btn-primary" type="submit">Ta bort beställning</button>
+</form>

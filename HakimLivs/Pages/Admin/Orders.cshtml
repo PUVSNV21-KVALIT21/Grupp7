@@ -5,17 +5,58 @@
 }
 
 <div class="container">
-    <div class="row">
+    <div>
+        @if (!string.IsNullOrEmpty(Model.Message))
+        {
+            <label class="alert">@Model.Message</label>
+            <br />
+        }
+    </div>
+    <div class="row justify-content-center">
 
-        <div class="col-md-2">
-            <div class="list-group list-group-flush">
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-page="/Admin/Products">Produkter</a>
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-page="/Admin/Orders">Ordrar</a>                
-            </div>
+        <div class="col-auto">
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-page="/Admin/Products">Produkter</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-page="/Admin/Orders">Ordrar</a>
         </div>
 
-        <div class="col-md-2">
-            <h1>Ordrar</h1>
+        <div class="col-8">
+            <h1>Orders</h1>
+
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Beställare</th>
+                            <th scope="col">Status</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var order in Model.Orders)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(c => order.ID)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(c => order.User.FirstName) @Html.DisplayFor(c => order.User.LastName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(c => order.Status)
+                                </td>
+                                <td>
+                                    <a class="btn btn-primary" asp-page="../Orders/Details" asp-route-id="@order.ID">Edit</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-primary" asp-page="/Orders/Delete" asp-route-id="@order.ID">Ta bort</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
