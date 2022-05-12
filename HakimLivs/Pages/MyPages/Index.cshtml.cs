@@ -25,8 +25,7 @@ namespace HakimLivs.Pages.MyPages
         public string? Message { get; set; }
         public async Task OnGetAsync(string id)
         {
-            var user =
-            AppUser = await database.Users.FirstOrDefaultAsync(x => x.Id == id);
+            AppUser = await database.Users.FirstOrDefaultAsync(u => u.Id == id);
         }
 
         public async Task<IActionResult> OnPostAsync(AppUser appUser)
