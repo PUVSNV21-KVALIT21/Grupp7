@@ -24,7 +24,7 @@
 			</div>
 
 			<div class="col-8">
-				<h1>Orders</h1>
+				<h1>Ordrar</h1>
 
 				<div class="table-responsive">
 					<table class="table">
@@ -51,7 +51,7 @@
 									@Html.DisplayFor(c => order.Status)
 								</td>
 								<td>
-									<a class="btn btn-primary" asp-page="../Orders/Details" asp-route-id="@order.ID">Edit</a>
+									<a class="btn btn-primary" asp-page="../Orders/Details" asp-route-id="@order.ID">Redigera</a>
 								</td>
 								<td>
 									<a class="btn btn-primary" asp-page="/Orders/Delete" asp-route-id="@order.ID">Ta bort</a>
