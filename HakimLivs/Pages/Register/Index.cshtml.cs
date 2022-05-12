@@ -53,7 +53,6 @@ namespace HakimLivs.Pages.Register
                         };
                         IdentityUser User = user;
                         await _userManager.CreateAsync(User, password);
-                        //database.Users.Add(user);
 
                         await database.SaveChangesAsync();
                         return RedirectToPage("../Index");
