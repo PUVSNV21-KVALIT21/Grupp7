@@ -7,8 +7,10 @@ namespace HakimLivs.Models
     public class AppUser : IdentityUser
     {
         [Required]
+        [Display(Name = "Förnamn")]
         public string FirstName { get; set; }
         [Required]
+        [Display(Name = "Efternamn")]
         public string LastName { get; set; }
         [Required]
         public Address Address { get; set; }
@@ -18,10 +20,13 @@ namespace HakimLivs.Models
     public class Address
     {
         [Required]
+        [Display(Name = "Gatuadress")]
         public string Street { get; set; }
         [Required]
+        [Display(Name = "Postkod")]
         public string ZipCode { get; set; }
         [Required]
+        [Display(Name = "Stad")]
         public string City { get; set; }
     }
 }
