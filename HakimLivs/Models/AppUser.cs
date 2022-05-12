@@ -13,6 +13,7 @@ namespace HakimLivs.Models
         [Required]
         public Address Address { get; set; }
         public bool IsAdmin { get; set; } = false;
+        public List<Product> Products { get; set; }
     }
     [Owned]
     public class Address

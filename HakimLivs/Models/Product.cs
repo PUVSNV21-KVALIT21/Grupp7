@@ -27,5 +27,6 @@ namespace HakimLivs.Models
         [Required]
         public string UnitType { get; set; }
         public double UnitValue { get; set; }
+        public List<AppUser> AppUsers { get; set; }
     }
 }
