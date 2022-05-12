@@ -40,5 +40,6 @@ namespace HakimLivs.Models
         public string UnitType { get; set; }
         [Display(Name = "Mängd")]
         public double UnitValue { get; set; }
+        public List<AppUser> AppUsers { get; set; }
     }
 }
