@@ -1,73 +1,72 @@
 ﻿@page
 @model HakimLivs.Pages.Admin.OrdersModel
 @{
-	ViewData["Title"] = "Hakim Livs!";
+    ViewData["Title"] = "Hakim Livs!";
 }
 
 <div class="container">
 
-	@if (Model.appUser.IsAdmin)
-	{
-		@if (!string.IsNullOrEmpty(Model.Message))
-		{
-			<div>
-				<label class="alert">@Model.Message</label>
-				<br />
-			</div>
-		}
-		
-		<div class="row justify-content-center">
+    @if (Model.appUser.IsAdmin)
+    {
+        @if (!string.IsNullOrEmpty(Model.Message))
+        {
+            <div>
+                <label class="alert">@Model.Message</label>
+                <br />
+            </div>
+        }
 
-			<div class="col-auto">
-				<a class="list-group-item list-group-item-action list-group-item-light p-3" asp-page="/Admin/Products">Produkter</a>
-				<a class="list-group-item list-group-item-action list-group-item-light p-3" asp-page="/Admin/Orders">Ordrar</a>
-			</div>
+        <div class="row">
+            <div class="col-sm-4 col-md-4 col-lg-4 col-auto">
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-page="/Admin/Products">Produkter</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-page="/Admin/Orders">Ordrar</a>
+            </div>
 
-			<div class="col-8">
-				<h1>Ordrar</h1>
+            <div class="col-sm-8 col-md-8 col-lg-8 col-auto">
+                <h1>Ordrar</h1>
 
-				<div class="table-responsive">
-					<table class="table">
-						<thead>
-							<tr>
-								<th scope="col">ID</th>
-								<th scope="col">Beställare</th>
-								<th scope="col">Status</th>
-								<th scope="col"></th>
-								<th scope="col"></th>
-							</tr>
-						</thead>
-						<tbody>
-						@foreach (var order in Model.Orders)
-						{
-							<tr>
-								<td>
-									@Html.DisplayFor(c => order.ID)
-								</td>
-								<td>
-									@Html.DisplayFor(c => order.User.FirstName) @Html.DisplayFor(c => order.User.LastName)
-								</td>
-								<td>
-									@Html.DisplayFor(c => order.Status)
-								</td>
-								<td>
-									<a class="btn btn-primary" asp-page="/Orders/Details" asp-route-id="@order.ID">Redigera</a>
-								</td>
-								<td>
-									<a class="btn btn-primary" asp-page="/Orders/Delete" asp-route-id="@order.ID">Ta bort</a>
-								</td>
-							</tr>
-						}
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-	}
-	else
-	{
-		<h1>Snyggt hackat men tyvärr, inte admin ;)</h1>
-		<a asp-page="../Index">Tillbaka till startsidan</a>
-	}
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Beställare</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">#</th>
+                                <th scope="col">#</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var order in Model.Orders)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(c => order.ID)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(c => order.User.FirstName) @Html.DisplayFor(c => order.User.LastName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(c => order.Status)
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-primary" asp-page="/Orders/Details" asp-route-id="@order.ID">Redigera</a>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-primary" asp-page="/Orders/Delete" asp-route-id="@order.ID">Ta bort</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <h1>Snyggt hackat men tyvärr, inte admin ;)</h1>
+        <a asp-page="../Index">Tillbaka till startsidan</a>
+    }
 
 </div>

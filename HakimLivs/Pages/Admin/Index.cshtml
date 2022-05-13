@@ -8,13 +8,11 @@
     <div class="row">
         @if (Model.appUser.IsAdmin)
         {
-        <div class="col-md-2">
-            <div class="list-group list-group-flush">
+            <div class="col-sm-4 col-md-4 col-lg-4 col-auto">
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-page="/Admin/Products">Produkter</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-page="/Admin/Orders">Ordrar</a>            
             </div>
-        </div>
-        <div class="col">
+        <div class="col-sm-8 col-md-8 col-lg-8 col-auto">
             <h1>Välkommen till Admin!</h1>
         </div>
         }
