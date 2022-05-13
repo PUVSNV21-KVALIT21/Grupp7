@@ -1,31 +1,34 @@
 using HakimLivs.Data;
 using HakimLivs.Models;
-using HakimLivs.Utilities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
 
 namespace HakimLivs.Pages.Admin
 {
-    public class IndexModel : PageModel
+    public class CustomersModel : PageModel
     {
+
         private readonly ApplicationDbContext database;
-        private readonly ILogger<IndexModel> _logger;
         private readonly UserManager<IdentityUser> _userManager;
 
 
-        public IndexModel(ILogger<IndexModel> logger, ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        public CustomersModel(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             database = context;
-            _logger = logger;
             _userManager = userManager;
         }
 
+        [BindProperty(SupportsGet = true)]
+        public string? Message { get; set; }
         public AppUser? appUser { get; set; }
+        public List<AppUser> appUsers { get; set; }
 
         public async Task OnGetAsync()
         {
+            appUsers = await database.Users.ToListAsync();
             var httpUser = _userManager.GetUserAsync(User).Result;
             appUser = await database.Users.FirstOrDefaultAsync(u => u.Id == httpUser.Id);
         }

@@ -1,5 +1,5 @@
 ﻿@page
-@model HakimLivs.Pages.Admin.OrdersModel
+@model HakimLivs.Pages.Admin.CustomersModel
 @{
     ViewData["Title"] = "Hakim Livs!";
 }
@@ -24,37 +24,25 @@
             </div>
 
             <div class="col-sm-8 col-md-8 col-lg-8 col-auto">
-                <h1>Ordrar</h1>
+                <h1>Kunder</h1>
 
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
                             <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Beställare</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">#</th>
-                                <th scope="col">#</th>
+                                <th scope="col">Namn</th>
+                                <th scope="col">Email</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var order in Model.Orders)
+                            @foreach (var user in Model.appUsers)
                             {
                                 <tr>
                                     <td>
-                                        @Html.DisplayFor(c => order.ID)
+                                        @Html.DisplayFor(c => user.FirstName) @Html.DisplayFor(c => user.LastName)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(c => order.User.FirstName) @Html.DisplayFor(c => order.User.LastName)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(c => order.Status)
-                                    </td>
-                                    <td>
-                                        <a class="btn btn-primary" asp-page="/Orders/Details" asp-route-id="@order.ID">Redigera</a>
-                                    </td>
-                                    <td>
-                                        <a class="btn btn-primary" asp-page="/Orders/Delete" asp-route-id="@order.ID">Ta bort</a>
+                                        @Html.DisplayFor(c => user.Email)
                                     </td>
                                 </tr>
                             }

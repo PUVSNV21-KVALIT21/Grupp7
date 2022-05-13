@@ -5,50 +5,58 @@
 }
 
 <div class="container">
-    <div class="row justify-content-center">
-
-        <div class="col-auto">
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-page="/Admin/Products">Produkter</a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-page="/Admin/Orders">Ordrar</a>                
-        </div>
-
-        <div class="col-8">
-            <h1>Produkter</h1>
-            <div>
-                <a asp-page="Products/Create">Lägg till ny produkt</a>
+    <div class="row">
+        @if (Model.AppUser.IsAdmin)
+        {
+            <div class="col-sm-4 col-md-4 col-lg-4 col-auto">
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-page="/Admin/Products">Produkter</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-page="/Admin/Orders">Ordrar</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-page="/Admin/Customers">Kunder</a>
             </div>
 
-            <div class="table-responsive">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Name</th>
-                            <th scope="col"></th>
-                            <th scope="col"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var product in Model.Products)
-                        {
+            <div class="col-sm-8 col-md-8 col-lg-8 col-auto">
+                <h1>Produkter</h1>
+                <div>
+                    <a asp-page="/Products/Create">Lägg till ny produkt</a>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
                             <tr>
-                                <td>
-                                    @Html.DisplayFor(c => product.ID)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(c => product.Name)
-                                </td>
-                                <td>
-                                    <a class="btn btn-primary" asp-page="/Products/Edit" asp-route-id="@product.ID">Edit</a>
-                                </td>
-                                <td>
-                                    <a class="btn btn-primary" asp-page="/Products/Delete" asp-route-id="@product.ID">Ta bort</a>
-                                </td>
+                                <th scope="col">ID</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">#</th>
+                                <th scope="col">#</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach (var product in Model.Products)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(c => product.ID)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(c => product.Name)
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-primary" asp-page="/Products/Edit" asp-route-id="@product.ID">Redigera</a>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-primary" asp-page="/Products/Delete" asp-route-id="@product.ID">Ta bort</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
+        }
+        else
+        {
+            <h1>Snyggt hackat men tyvärr, inte admin ;)</h1>
+            <a asp-page="../Index">Tillbaka till startsidan</a>
+        }
     </div>
 </div>

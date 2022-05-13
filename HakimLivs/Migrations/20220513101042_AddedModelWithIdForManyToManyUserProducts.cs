@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HakimLivs.Migrations
 {
-    public partial class OverrideIdentity : Migration
+    public partial class AddedModelWithIdForManyToManyUserProducts : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -68,7 +68,7 @@ namespace HakimLivs.Migrations
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
                     DiscountPrice = table.Column<double>(type: "float", nullable: true),
-                    ComparisonPrice = table.Column<double>(type: "float", nullable: false),
+                    ComparisonPrice = table.Column<double>(type: "float", nullable: true),
                     Origin = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ExpirationDate = table.Column<DateTime>(type: "smalldatetime", nullable: true),
                     Stock = table.Column<int>(type: "int", nullable: false),
@@ -193,7 +193,8 @@ namespace HakimLivs.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    DiscountCode = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    DiscountCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -203,6 +204,31 @@ namespace HakimLivs.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Cart",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    ProductID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cart", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Cart_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Cart_Products_ProductID",
+                        column: x => x.ProductID,
+                        principalTable: "Products",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -272,6 +298,16 @@ namespace HakimLivs.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Cart_AppUserId",
+                table: "Cart",
+                column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cart_ProductID",
+                table: "Cart",
+                column: "ProductID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_OrderProducts_OrderID",
                 table: "OrderProducts",
                 column: "OrderID");
@@ -303,6 +339,9 @@ namespace HakimLivs.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Cart");
 
             migrationBuilder.DropTable(
                 name: "OrderProducts");

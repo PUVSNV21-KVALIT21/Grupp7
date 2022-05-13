@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HakimLivs.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220506064105_OverrideIdentity")]
-    partial class OverrideIdentity
+    [Migration("20220513101042_AddedModelWithIdForManyToManyUserProducts")]
+    partial class AddedModelWithIdForManyToManyUserProducts
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,6 +24,29 @@ namespace HakimLivs.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("HakimLivs.Models.Cart", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ProductID")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("ProductID");
+
+                    b.ToTable("Cart");
+                });
+
             modelBuilder.Entity("HakimLivs.Models.Order", b =>
                 {
                     b.Property<int>("ID")
@@ -33,6 +56,9 @@ namespace HakimLivs.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
                     b.Property<string>("DiscountCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -88,7 +114,7 @@ namespace HakimLivs.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("ComparisonPrice")
+                    b.Property<double?>("ComparisonPrice")
                         .HasColumnType("float");
 
                     b.Property<string>("Description")
@@ -355,6 +381,23 @@ namespace HakimLivs.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("AppUser");
+                });
+
+            modelBuilder.Entity("HakimLivs.Models.Cart", b =>
+                {
+                    b.HasOne("HakimLivs.Models.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("AppUserId");
+
+                    b.HasOne("HakimLivs.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("HakimLivs.Models.Order", b =>
