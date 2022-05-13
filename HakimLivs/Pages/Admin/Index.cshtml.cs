@@ -27,7 +27,15 @@ namespace HakimLivs.Pages.Admin
         public async Task OnGetAsync()
         {
             var httpUser = _userManager.GetUserAsync(User).Result;
-            appUser = await database.Users.FirstOrDefaultAsync(u => u.Id == httpUser.Id);
+            if (httpUser != null)
+            {
+                appUser = await database.Users.FirstOrDefaultAsync(u => u.Id == httpUser.Id);
+            }
+            else
+            {
+                appUser = new AppUser();
+            }
+
         }
     }
 }

@@ -28,7 +28,14 @@ namespace HakimLivs.Pages.Admin
         public async Task OnGetAsync(string id)
         {
             var httpUser = _userManager.GetUserAsync(User).Result;
-            AppUser = await database.Users.FirstOrDefaultAsync(u => u.Id == httpUser.Id);
+            if (httpUser != null)
+            {
+                AppUser = await database.Users.FirstOrDefaultAsync(u => u.Id == httpUser.Id);
+            }
+            else
+            {
+                AppUser = new AppUser();
+            }
 
             Categories = await database.Products.Select(c => c.Category).Distinct().ToListAsync();
             if (id == null)
