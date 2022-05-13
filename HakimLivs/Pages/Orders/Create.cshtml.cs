@@ -16,6 +16,9 @@ namespace HakimLivs.Pages.Orders
             _context = context;
             _userManager = userManager;
         }
+
+        [BindProperty(SupportsGet = true)]
+        public string Message { get; set; } 
         
         public Order Order { get; set; }
 
@@ -26,32 +29,89 @@ namespace HakimLivs.Pages.Orders
 
         public async Task<IActionResult> OnGetAsync()
         {
+
             var httpUser = _userManager.GetUserAsync(User).Result;
-            var user = await _context.Users.Include(u => u.Products).FirstOrDefaultAsync(u => u.Id == httpUser.Id);
 
-            // Products = user.Products;
+            if (httpUser != null)
+            {
+                Products = await _context.Cart
+                .Where(c => c.AppUser.Id == httpUser.Id)
+                .Select(c => c.Product)
+                .ToListAsync();
 
-            // test
-            var testProduct1 = await _context.Products.Skip(1).FirstAsync();
-            var testProduct2 = await _context.Products.Skip(2).FirstAsync();
-            var testProduct3 = await _context.Products.Skip(3).FirstAsync();
-            var testProduct4 = await _context.Products.Skip(4).FirstAsync();
-            var testProduct5 = await _context.Products.Skip(5).FirstAsync();
+                CountProducts();
+                
+            }
 
-            Products = new List<Product> {
-                testProduct1,
-                testProduct1,
-                testProduct1,
-                testProduct1,
-                testProduct2,
-                testProduct2,
-                testProduct2,
-                testProduct3,
-                testProduct3,
-                testProduct4,
-                testProduct5
-            };           
-            ProductsCount= new Dictionary<int, int>();
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostEmptyAsync()
+        {
+            var httpUser = _userManager.GetUserAsync(User).Result;
+
+            if(httpUser != null)
+            {
+                var cart = await _context.Cart.Where(c => c.AppUser.Id == httpUser.Id).ToListAsync();
+
+                _context.Cart.RemoveRange(cart);
+
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToPage("/Index");
+
+        }
+
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            var httpUser = _userManager.GetUserAsync(User).Result;
+
+            if (httpUser == null)
+            {
+                return RedirectToPage("/Index");
+            }
+            var user = await _context.Users.Where(u => u.Id == httpUser.Id).FirstOrDefaultAsync(); 
+
+            Products = await _context.Cart
+                .Where(c => c.AppUser.Id == httpUser.Id)
+                .Select(c => c.Product)
+                .ToListAsync();
+
+            CountProducts();
+
+            var order = new Order {
+                User = user
+            };
+
+            foreach (var product in Products)
+            {
+                var orderProduct = new OrderProduct
+                {
+                    Product = product,
+                    Order = order,
+                    Quantity = ProductsCount[product.ID]
+                };
+                await _context.OrderProducts.AddAsync(orderProduct);
+            }
+
+            var cart = await _context.Cart.Where(c => c.AppUser.Id == httpUser.Id).ToListAsync();
+
+            _context.Cart.RemoveRange(cart);            
+
+            await _context.Orders.AddAsync(order);
+            await _context.SaveChangesAsync();
+
+            Message = "Tack för ditt köp!";
+
+            return RedirectToPage("/Orders/Create", new { Message });
+        }
+
+
+        private void CountProducts()
+        {
+            ProductsCount = new Dictionary<int, int>();
 
             foreach (var product in Products)
             {
@@ -66,10 +126,10 @@ namespace HakimLivs.Pages.Orders
                     ProductsCount[product.ID] = 1;
                 }
             }
-
+            
+            // Remove duplicate products that have now been counted
             Products = Products.DistinctBy(p => p.ID).ToList();
 
-            return Page();
         }
     }
 }

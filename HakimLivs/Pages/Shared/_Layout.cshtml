@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -31,7 +35,8 @@
 
                 </div>
             </div>
-            <a asp-page="/Orders/Create">
+            @if(SignInManager.IsSignedIn(User)){
+                <a asp-page="/Orders/Create">
                 <div class="position-sticky">
                     <div class="pe-3" style="padding-left: 0.75rem;">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="32" height="32" viewBox="0 0 256 256" xml:space="preserve">
@@ -48,6 +53,8 @@
                     </div>
                 </div>
            </a>
+            }
+            
         </nav>
     </header>
     <div class="container">
