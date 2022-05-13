@@ -1,0 +1,59 @@
+﻿@page
+@model HakimLivs.Pages.Orders.CreateModel
+@{
+    ViewData["Title"] = "Checka ut";    
+}
+
+<h1>Skapa order</h1>
+
+<div class="container">
+<div class="col-md">
+   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 justify-content-center">
+        <form method="post">
+            @foreach(var product in @Model.Products)
+            {
+                <div class="col p-3">
+                    <div class="card h-100 text-center">
+                        <img src="@product.Image"
+                            class="card-img-top align-self-center p-3"
+                            style="height: 50%; width: 50%; object-fit: contain;"
+                            alt="@product.Name">
+                        <div class="card-body">
+                            @if (product.DiscountPrice == null)
+                            {
+                                <h5 class="card-title">@Utils.DisplayPrice(product.Price)</h5>
+                            }
+                            else
+                            {
+                                <h5 class="card-title">@Utils.DisplayPrice(product.DiscountPrice)</h5>
+                            }
+                            <h6 class="card-subtitle" style="min-height: 3rem;"><a asp-page="./Products/Details" asp-route-id="@product.ID">@product.Name</a></h6>
+                            <ul class="list-group list-group-flush">
+
+                                <li class="list-group-item">@product.Brand</li>
+                                <li class="list-group-item">@Utils.DisplayUnitvalue(product.UnitValue) @product.UnitType</li>
+                                @if (product.DiscountPrice != null)
+                                {
+                                    <li class="list-group-item">@Utils.GetProductDiscountPercentage(product)%</li>
+                                }
+                                <li class="list-group-item">Antal: @Model.ProductsCount[product.ID]</li>
+
+                            </ul>
+                        </div>                                              
+                        </div>
+                    </div>
+            }
+            <div class="form-group mt-2 mb-2">
+                <input type="submit" value="Skapa order" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+    </div>
+    </div>
+<div>
+    <a asp-page="../Index">Tillbaka till startsidan</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
