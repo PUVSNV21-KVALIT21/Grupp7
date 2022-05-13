@@ -22,19 +22,27 @@ namespace HakimLivs.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("AppUserProduct", b =>
+            modelBuilder.Entity("HakimLivs.Models.Cart", b =>
                 {
-                    b.Property<string>("AppUsersId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("ProductsID")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.HasKey("AppUsersId", "ProductsID");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.HasIndex("ProductsID");
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.ToTable("AppUserProduct");
+                    b.Property<int>("ProductID")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("ProductID");
+
+                    b.ToTable("Cart");
                 });
 
             modelBuilder.Entity("HakimLivs.Models.Order", b =>
@@ -373,19 +381,21 @@ namespace HakimLivs.Migrations
                     b.HasDiscriminator().HasValue("AppUser");
                 });
 
-            modelBuilder.Entity("AppUserProduct", b =>
+            modelBuilder.Entity("HakimLivs.Models.Cart", b =>
                 {
-                    b.HasOne("HakimLivs.Models.AppUser", null)
+                    b.HasOne("HakimLivs.Models.AppUser", "AppUser")
                         .WithMany()
-                        .HasForeignKey("AppUsersId")
+                        .HasForeignKey("AppUserId");
+
+                    b.HasOne("HakimLivs.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HakimLivs.Models.Product", null)
-                        .WithMany()
-                        .HasForeignKey("ProductsID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("AppUser");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("HakimLivs.Models.Order", b =>
