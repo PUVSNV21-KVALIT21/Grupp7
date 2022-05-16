@@ -1,12 +1,49 @@
 using HakimLivs.Models;
 using HakimLivs.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Globalization;
 
 namespace HakimLivs.Tests
 {
     [TestClass]
     public class UnitTests
     {
+        [TestMethod]
+        public void DisplayNoDecimalPrice()
+        {
+            CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+
+            double price = 15;
+
+            string test = Utils.DisplayPrice(price);
+
+            Assert.AreEqual(test, "15:-");
+        }
+
+        [TestMethod]
+        public void DisplayDecimalPrice()
+        {
+            CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+
+            double price = 15.5;
+
+            string test = Utils.DisplayPrice(price);
+
+            Assert.AreEqual(test, "15,50 kr");
+        }
+
+        [TestMethod]
+        public void DisplayMultipleDecimalPrice()
+        {
+            CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+
+            double price = 15.999999;
+
+            string test = Utils.DisplayPrice(price);
+
+            Assert.AreEqual(test, "15,99 kr");
+        }
+
         [TestMethod]
         public void DiscountPercentageInt()
         {

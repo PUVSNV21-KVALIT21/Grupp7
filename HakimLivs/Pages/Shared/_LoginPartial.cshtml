@@ -1,13 +1,27 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using System.Linq;
+@using Microsoft.EntityFrameworkCore;
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
+@inject ApplicationDbContext database;
+ 
+@{
+    var HttpUser = UserManager.GetUserAsync(User).Result;
+}
 
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
+    var user = await database.Users.FirstOrDefaultAsync(u => u.Id == HttpUser.Id);
+
     <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
+        <a  class="nav-link text-dark" asp-page="/MyPages/Index" asp-route-id="@HttpUser.Id" title="Manage">Mina sidor</a>
     </li>
+    if(user.IsAdmin){
+        <li class="nav-item">
+        <a  class="nav-link text-dark" asp-page="/Admin/Index" title="Manage">Admin</a>
+    </li>
+    }
     <li class="nav-item">
         <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post" >
             <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
@@ -17,10 +31,10 @@
 else
 {
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+        <a class="nav-link text-dark" asp-page="/Register/Index">Register</a>
     </li>
     <li class="nav-item">
         <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
     </li>
-}
+	}
 </ul>

@@ -1,0 +1,86 @@
+﻿@page "{id}"
+@model HakimLivs.Pages.MyPages.IndexModel
+@{
+	ViewData["Title"] = "Redigera uppgifter";
+}
+
+<h1>Redigera uppgifter</h1>
+
+<h4>@Model.AppUser.FirstName</h4>
+<hr />
+<div class="row">
+	<div class="col-md-4">
+		@if (!string.IsNullOrEmpty(Model.Message))
+		{
+							<label class="alert">@Model.Message</label>
+							<br />
+							<a asp-page="../Index">Tillbaka till startsidan</a>
+		}
+		<form method="post">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<input type="hidden" asp-for="AppUser.Id" />
+			<div class="form-group">
+				<label asp-for="AppUser.FirstName" class="control-label"></label>
+				<input asp-for="AppUser.FirstName" class="form-control" />
+				<span asp-validation-for="AppUser.FirstName" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="AppUser.LastName" class="control-label"></label>
+				<input asp-for="AppUser.LastName" class="form-control" />
+				<span asp-validation-for="AppUser.LastName" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="AppUser.Email" class="control-label"></label>
+				<input asp-for="AppUser.Email" class="form-control" />
+				<span asp-validation-for="AppUser.Email" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="AppUser.Address.Street" class="control-label"></label>
+				<input asp-for="AppUser.Address.Street" class="form-control" />
+				<span asp-validation-for="AppUser.Address.Street" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="AppUser.Address.ZipCode" class="control-label"></label>
+				<input asp-for="AppUser.Address.ZipCode" class="form-control" />
+				<span asp-validation-for="AppUser.Address.ZipCode" class="text-danger"></span>
+			</div>
+
+			<div class="form-group">
+				<input type="submit" value="Spara ändring" class="btn btn-primary mt-2 mb-3" />
+			</div>
+		</form>
+
+		<form method="post" asp-page-handler="Password">
+		<h3>Ändra lösenord</h3>
+			<div class="form-group">
+				<label asp-for="Password" class="control-label">Nytt lösenord</label>
+				<input type="password" asp-for="Password" class="form-control" />
+				<span asp-validation-for="Password" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="ConfirmPassword" class="control-label">Repetera lösenord</label>
+				<input type="password" asp-for="ConfirmPassword" class="form-control" />
+				<span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Spara nytt lösenord" class="btn btn-primary mt-2 mb-3" />
+			</div>
+		</form>
+@*		<h3>Avsluta konto</h3>
+		<form method="post" asp-page-handler="Delete">
+			<div class="form-group">
+				<input type="submit" value="Radera konto" class="btn btn-primary mt-2 mb-3" />
+			</div>
+		</form>*@
+	</div>
+</div>
+
+<div>
+	<a asp-page="../Index">Tillbaka till startsidan</a>
+</div>
+
+@section Scripts {
+    @{
+	await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}

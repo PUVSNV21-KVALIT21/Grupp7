@@ -5,7 +5,7 @@ using System.Globalization;
 using System.Text.Json;
 
 namespace HakimLivs.Data
-{    
+{
     public class HakimData
     {
         public List<DataObject> data { get; set; }
@@ -75,17 +75,12 @@ namespace HakimLivs.Data
 
     public class DiscountPrice
     {
-        public DPrice price { get; set; }
+        public Price price { get; set; }
     }
 
     public class Measurement
     {
         public string unit { get; set; }
-        public string number { get; set; }
-    }
-
-    public class DPrice
-    {
         public string number { get; set; }
     }
 
@@ -100,8 +95,6 @@ namespace HakimLivs.Data
         /// <param name="userManager">The user manager.</param>
         public static async Task InitializeAsync(ApplicationDbContext database, UserManager<IdentityUser> userManager)
         {
-            CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
-
             if (database.Products.Any())
             {
                 return;
@@ -111,103 +104,100 @@ namespace HakimLivs.Data
 
             if (!database.Users.Any())
             {
-                // Hakim
-                var hakimEmail = "hakim@example.com";
-                var hakimUser = new IdentityUser(hakimEmail);
-                hakimUser.Email = hakimEmail;
-                hakimUser.EmailConfirmed = true;
-                await userManager.CreateAsync(hakimUser, "Test123!");
+                string password = "Test123!";
+                ////// Hakim
 
-                var hakim = new User
+
+                var hakim = new AppUser
                 {
-                    IdentityUser = hakimUser,
                     FirstName = "Hakim",
                     LastName = "Hakimsson",
                     Address = new Address { Street = "Hittepågatan 1", ZipCode = "12345", City = "Bollnäs" },
                     IsAdmin = true,
+                    Email = "hakim@example.com",
+                    EmailConfirmed = true,
+                    UserName = "hakim@example.com"
                 };
-                database.Users.Add(hakim);
 
-                // User 1
-                var testEmail = "user@example.com";
-                var testUser = new IdentityUser(testEmail);
-                testUser.Email = testEmail;
-                testUser.EmailConfirmed = true;
-                await userManager.CreateAsync(testUser, "Test123!");
+                IdentityUser userHakim = hakim;
+                await userManager.CreateAsync(userHakim, password);
 
-                var user = new User
+                //// User 1
+
+                var user = new AppUser
                 {
-                    IdentityUser = testUser,
                     FirstName = "Test",
                     LastName = "Testsson",
-                    Address = new Address { Street = "Gatan 1", ZipCode = "12321", City = "Stockholm" }
+                    Address = new Address { Street = "Gatan 1", ZipCode = "12321", City = "Stockholm" },
+                    Email = "user@example.com",
+                    EmailConfirmed = true,
+                    UserName = "user@example.com"
+
                 };
-                database.Users.Add(user);
 
-                // User 2
-                var testEmail2 = "user2@example.com";
-                var testUser2 = new IdentityUser(testEmail2);
-                testUser2.Email = testEmail2;
-                testUser2.EmailConfirmed = true;
-                await userManager.CreateAsync(testUser2, "Test123!");
+                IdentityUser iUser1 = user;
+                await userManager.CreateAsync(iUser1, password);
 
-                var user2 = new User
+                //// User 2
+
+                var user2 = new AppUser
                 {
-                    IdentityUser = testUser2,
                     FirstName = "Håkan",
                     LastName = "Hellström",
-                    Address = new Address { Street = "Feskekörka", ZipCode = "66655", City = "Göteborg" }
+                    Address = new Address { Street = "Feskekörka", ZipCode = "66655", City = "Göteborg" },
+                    Email = "user2@example.com",
+                    EmailConfirmed = true,
+                    UserName = "user2@example.com"
+
                 };
-                database.Users.Add(user2);
 
-                // User 3
-                var testEmail3 = "user3@example.com";
-                var testUser3 = new IdentityUser(testEmail3);
-                testUser3.Email = testEmail3;
-                testUser3.EmailConfirmed = true;
-                await userManager.CreateAsync(testUser3, "Test123!");
+                IdentityUser iUser2 = user2;
+                await userManager.CreateAsync(iUser2, password);
 
-                var user3 = new User
+                //// User 3
+
+                var user3 = new AppUser
                 {
-                    IdentityUser = testUser3,
                     FirstName = "Laban",
                     LastName = "Spöksson",
-                    Address = new Address { Street = "Gatstigen 5", ZipCode = "13467", City = "Luleå" }
+                    Address = new Address { Street = "Gatstigen 5", ZipCode = "13467", City = "Luleå" },
+                    Email = "user3@example.com",
+                    EmailConfirmed = true,
+                    UserName = "user3@example.com"
                 };
-                database.Users.Add(user3);
 
-                // User 4
-                var testEmail4 = "user4@example.com";
-                var testUser4 = new IdentityUser(testEmail4);
-                testUser4.Email = testEmail4;
-                testUser4.EmailConfirmed = true;
-                await userManager.CreateAsync(testUser4, "Test123!");
+                IdentityUser iUser3 = user3;
+                await userManager.CreateAsync(iUser3, password);
 
-                var user4 = new User
+                //// User 4
+
+                var user4 = new AppUser
                 {
-                    IdentityUser = testUser4,
                     FirstName = "Sven",
                     LastName = "Boll",
-                    Address = new Address { Street = "Gränd 7", ZipCode = "99887", City = "Malmö" }
+                    Address = new Address { Street = "Gränd 7", ZipCode = "99887", City = "Malmö" },
+                    Email = "user4@example.com",
+                    EmailConfirmed = true,
+                    UserName = "user4@example.com"
                 };
-                database.Users.Add(user4);
 
-                // User 5
-                var testEmail5 = "user5@example.com";
-                var testUser5 = new IdentityUser(testEmail5);
-                testUser5.Email = testEmail5;
-                testUser5.EmailConfirmed = true;
-                await userManager.CreateAsync(testUser5, "Test123!");
+                IdentityUser iUser4 = user4;
+                await userManager.CreateAsync(iUser4, password);
 
-                var user5 = new User
+                //// User 5
+
+                var user5 = new AppUser
                 {
-                    IdentityUser = testUser5,
                     FirstName = "Mona",
                     LastName = "Lisa",
-                    Address = new Address { Street = "Rue de Rivoli", ZipCode = "75001", City = "Paris" }
+                    Address = new Address { Street = "Rue de Rivoli", ZipCode = "75001", City = "Paris" },
+                    Email = "user5@example.com",
+                    EmailConfirmed = true,
+                    UserName = "user5@example.com"
                 };
-                database.Users.Add(user5);
 
+                IdentityUser iUser5 = user5;
+                await userManager.CreateAsync(iUser5, password);
                 await database.SaveChangesAsync();
             }
         }
@@ -231,8 +221,6 @@ namespace HakimLivs.Data
                             if (data != null)
                             {
                                 var dataObj = JsonSerializer.Deserialize<HakimData>(data);
-                                //var listObjects = dataObj.Name;
-                                Console.WriteLine($"Name: {dataObj.data[0].attributes.title}");
 
                                 foreach (var item in dataObj.data)
                                 {
@@ -241,7 +229,7 @@ namespace HakimLivs.Data
                                     string d = item.attributes.body.value;
                                     string description = Utils.StripHTML(d);
 
-                                    string category = item.attributes.computed_categories[0].name;
+                                    string category = item.attributes.computed_categories[1].name;
 
                                     string brand = "";
                                     if (item.attributes.computed_brand != null)
@@ -281,8 +269,17 @@ namespace HakimLivs.Data
 
                                     int stock = item.attributes.computed_variations[0].stock;
                                     string unitType = item.attributes.computed_variations[0].measurement.unit;
-                                    double unitValue = double.Parse(item.attributes.computed_variations[0].measurement.number);
-                                    double comparisonPrice = 1 / unitValue * price;
+                                    double unitValue = 0;
+                                    double unitRaw = double.Parse(item.attributes.computed_variations[0].measurement.number);
+                                    if (unitRaw % 1 == 0)
+                                    {
+                                        unitValue = unitRaw + 0.01;
+                                    }
+                                    else
+                                    {
+                                        unitValue = unitRaw;
+                                    }
+                                    double? comparisonPrice = 1 / unitValue * discountPrice;
 
                                     var product = new Product
                                     {
@@ -300,8 +297,8 @@ namespace HakimLivs.Data
                                         UnitType = unitType,
                                         UnitValue = unitValue
                                     };
-                                    
-                                    database.Products.Add(product);                              
+
+                                    database.Products.Add(product);
                                 }
                                 await database.SaveChangesAsync();
                             }

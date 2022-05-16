@@ -3,8 +3,8 @@
     public class Order
     {
         public int ID { get; set; }
-        public User User { get; set; }
-        public string DiscountCode { get; set; }
-
+        public AppUser User { get; set; }
+        public string? DiscountCode { get; set; }
+        public string Status { get; set; } = "Inkommen";
     }
 }

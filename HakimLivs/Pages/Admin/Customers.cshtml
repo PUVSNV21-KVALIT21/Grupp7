@@ -1,0 +1,61 @@
+﻿@page
+@model HakimLivs.Pages.Admin.CustomersModel
+@{
+    ViewData["Title"] = "Hakim Livs!";
+}
+
+<div class="container">
+
+    @if (Model.appUser.IsAdmin)
+    {
+        @if (!string.IsNullOrEmpty(Model.Message))
+        {
+            <div>
+                <label class="alert">@Model.Message</label>
+                <br />
+            </div>
+        }
+
+        <div class="row">
+            <div class="col-sm-4 col-md-4 col-lg-4 col-auto">
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-page="/Admin/Products">Produkter</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-page="/Admin/Orders">Ordrar</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-page="/Admin/Customers">Kunder</a>
+            </div>
+
+            <div class="col-sm-8 col-md-8 col-lg-8 col-auto">
+                <h1>Kunder</h1>
+
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Namn</th>
+                                <th scope="col">Email</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var user in Model.appUsers)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(c => user.FirstName) @Html.DisplayFor(c => user.LastName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(c => user.Email)
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <h1>Snyggt hackat men tyvärr, inte admin ;)</h1>
+        <a asp-page="../Index">Tillbaka till startsidan</a>
+    }
+
+</div>

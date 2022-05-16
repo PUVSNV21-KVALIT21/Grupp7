@@ -1,0 +1,26 @@
+﻿@page 
+@model HakimLivs.Pages.Admin.IndexModel
+@{
+    ViewData["Title"] = "Hakim Livs!";
+}
+
+<div class="container">
+    <div class="row">
+        @if (Model.appUser.IsAdmin)
+        {
+            <div class="col-sm-4 col-md-4 col-lg-4 col-auto">
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-page="/Admin/Products">Produkter</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-page="/Admin/Orders">Ordrar</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-page="/Admin/Customers">Kunder</a>
+            </div>
+        <div class="col-sm-8 col-md-8 col-lg-8 col-auto">
+            <h1>Välkommen till Admin!</h1>
+        </div>
+        }
+        else
+        {
+            <h1>Snyggt hackat men tyvärr, inte admin ;)</h1>
+	        <a asp-page="../Index">Tillbaka till startsidan</a>
+        }
+    </div>
+</div>
