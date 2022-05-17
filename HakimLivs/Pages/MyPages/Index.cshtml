@@ -12,43 +12,51 @@
 	<div class="col-md-4">
 		@if (!string.IsNullOrEmpty(Model.Message))
 		{
-							<label class="alert">@Model.Message</label>
-							<br />
-							<a asp-page="../Index">Tillbaka till startsidan</a>
+			<label class="alert">@Model.Message</label>
+			<br />
+			<a asp-page="../Index">Tillbaka till startsidan</a>
 		}
-		<form method="post">
-			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-			<input type="hidden" asp-for="AppUser.Id" />
-			<div class="form-group">
-				<label asp-for="AppUser.FirstName" class="control-label"></label>
-				<input asp-for="AppUser.FirstName" class="form-control" />
-				<span asp-validation-for="AppUser.FirstName" class="text-danger"></span>
-			</div>
-			<div class="form-group">
-				<label asp-for="AppUser.LastName" class="control-label"></label>
-				<input asp-for="AppUser.LastName" class="form-control" />
-				<span asp-validation-for="AppUser.LastName" class="text-danger"></span>
-			</div>
-			<div class="form-group">
-				<label asp-for="AppUser.Email" class="control-label"></label>
-				<input asp-for="AppUser.Email" class="form-control" />
-				<span asp-validation-for="AppUser.Email" class="text-danger"></span>
-			</div>
-			<div class="form-group">
-				<label asp-for="AppUser.Address.Street" class="control-label"></label>
-				<input asp-for="AppUser.Address.Street" class="form-control" />
-				<span asp-validation-for="AppUser.Address.Street" class="text-danger"></span>
-			</div>
-			<div class="form-group">
-				<label asp-for="AppUser.Address.ZipCode" class="control-label"></label>
-				<input asp-for="AppUser.Address.ZipCode" class="form-control" />
-				<span asp-validation-for="AppUser.Address.ZipCode" class="text-danger"></span>
-			</div>
+			@if (Model.CanEdit)
+			{	
+				<form method="post">
+					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+					<input type="hidden" asp-for="AppUser.Id" />
+					<div class="form-group">
+						<label asp-for="AppUser.FirstName" class="control-label"></label>
+						<input asp-for="AppUser.FirstName" class="form-control" />
+						<span asp-validation-for="AppUser.FirstName" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="AppUser.LastName" class="control-label"></label>
+						<input asp-for="AppUser.LastName" class="form-control" />
+						<span asp-validation-for="AppUser.LastName" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="AppUser.Email" class="control-label"></label>
+						<input asp-for="AppUser.Email" class="form-control" />
+						<span asp-validation-for="AppUser.Email" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="AppUser.Address.Street" class="control-label"></label>
+						<input asp-for="AppUser.Address.Street" class="form-control" />
+						<span asp-validation-for="AppUser.Address.Street" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="AppUser.Address.ZipCode" class="control-label"></label>
+						<input asp-for="AppUser.Address.ZipCode" class="form-control" />
+						<span asp-validation-for="AppUser.Address.ZipCode" class="text-danger"></span>
+					</div>
 
-			<div class="form-group">
-				<input type="submit" value="Spara ändring" class="btn btn-primary mt-2 mb-3" />
-			</div>
-		</form>
+					<div class="form-group">
+						<input type="submit" value="Spara ändring" class="btn btn-primary mt-2 mb-3" />
+					</div>
+				</form>
+			}
+			else
+			{
+				<p>Du har en eller fler pågående ordrar, när de är betalda så kan du göra fler ändringar i dina uppgifter.</p>
+			}
+			
 
 		<form method="post" asp-page-handler="Password">
 		<h3>Ändra lösenord</h3>
