@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using HakimLivs.Data;
 using HakimLivs.Models;
 using Microsoft.EntityFrameworkCore;
+using HakimLivs.Utilities;
 
 namespace HakimLivs.Pages.Products
 {
@@ -22,6 +23,7 @@ namespace HakimLivs.Pages.Products
         }
 
         public SelectList Categories { get; set; }
+        public SelectList UnitTypes { get; set; }
         [BindProperty]
         public string SelectedCategory { get; set; }
         [BindProperty]
@@ -40,7 +42,7 @@ namespace HakimLivs.Pages.Products
             {
                 Categories = new SelectList(SelectListItems);
             }
-
+            UnitTypes = new SelectList(Utils.UnitTypes);
         }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD

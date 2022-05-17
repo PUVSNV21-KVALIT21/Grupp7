@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using HakimLivs.Data;
 using HakimLivs.Models;
 using System.Globalization;
+using HakimLivs.Utilities;
 
 namespace HakimLivs.Pages.Products
 {
@@ -24,6 +25,7 @@ namespace HakimLivs.Pages.Products
         }
 
         public SelectList Categories { get; set; }
+        public SelectList UnitTypes { get; set; }
         [BindProperty]
         public string SelectedCategory { get; set; }
         [BindProperty]
@@ -68,6 +70,7 @@ namespace HakimLivs.Pages.Products
                     Categories = new SelectList(SelectListItems);
                 }
             }
+            UnitTypes = new SelectList(Utils.UnitTypes);
 
             if (Product == null)
             {
