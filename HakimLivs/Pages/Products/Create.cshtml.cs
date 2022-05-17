@@ -8,25 +8,40 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using HakimLivs.Data;
 using HakimLivs.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace HakimLivs.Pages.Products
 {
     public class CreateModel : PageModel
     {
-        private readonly HakimLivs.Data.ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public CreateModel(HakimLivs.Data.ApplicationDbContext context)
+        public CreateModel(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public IActionResult OnGet()
-        {
-            return Page();
-        }
-
+        public SelectList Categories { get; set; }
+        [BindProperty]
+        public string SelectedCategory { get; set; }
         [BindProperty]
         public Product Product { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public List<string> SelectListItems { get; set; }
+
+        public async Task OnGetAsync()
+        {
+            if (SelectListItems.Count() == 0)
+            {
+                SelectListItems = await _context.Products.Select(p => p.Category).Distinct().ToListAsync();
+                Categories = new SelectList(SelectListItems);
+            }
+            else
+            {
+                Categories = new SelectList(SelectListItems);
+            }
+
+        }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()

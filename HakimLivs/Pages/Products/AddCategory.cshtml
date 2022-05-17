@@ -1,0 +1,28 @@
+﻿@page
+@model HakimLivs.Pages.Products.AddCategoryModel
+@{
+    ViewData["Title"] = "Lägg till kategori";
+}
+<div class="row">
+    <div class="col-md-4">
+        <h1>Lägg till kategori</h1>
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="Category" class="control-label"></label>
+                <input asp-for="Category" class="form-control" />
+                <span asp-validation-for="Category" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-2 mb-2">
+                <input type="submit" value="Lägg till kategori" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="../Index">Tillbaka till startsidan</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
