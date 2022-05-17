@@ -10,6 +10,12 @@ function updateCartIcon() {
     document.getElementById('cart-counter').textContent = cartQuantity
 }
 
+function updateCartIconFromDB(CartCount) {
+    localStorage.setItem('cartQuantity', CartCount)
+    cartQuantity = localStorage.getItem('cartQuantity')
+    document.getElementById('cart-counter').textContent = cartQuantity
+}
+
 function addProductToLocalStorage(id) {
     // {'productId': '<quantity>'}
     currentProductQuantity = localStorage.getItem(id)
