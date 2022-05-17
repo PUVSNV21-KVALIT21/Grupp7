@@ -1,4 +1,4 @@
-﻿@page "{id}"
+@page "{id}"
 @model HakimLivs.Pages.Orders.DetailsModel
 
 @{
@@ -23,6 +23,7 @@
                     </select>
                     <button class="btn btn-primary" type="submit">Spara</button>
                 </form>
+
                 <hr />
                     <table class="table table-bordered">
                         <thead>
@@ -59,14 +60,21 @@
                         </tbody>
                         <tfoot class="border-bottom-0">
                             <tr>
-                                @*<td class="table-borderless"></td>
-                                <td class="table-borderless"></td>
-                                <td style="border-width: 0;"></td>*@
                                 <td colspan="4" style="text-align: right; border: none;">
                                     Totalt:
                                 </td>
                                 <td style="text-align: right;">
                                     @Math.Round(@Model.Total, 2)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="5">
+                                    Betalningsmetod: @Model.Order.PaymentMethod
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="5">
+                                    Leveransmetod: @Model.Order.DeliveryMethod
                                 </td>
                             </tr>
                         </tfoot>

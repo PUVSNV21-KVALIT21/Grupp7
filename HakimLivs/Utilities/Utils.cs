@@ -4,9 +4,14 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace HakimLivs.Utilities
-{
+{    
     public class Utils
-    {
+    {        
+        public static List<string> UnitTypes = new List<string>
+        {
+            "kg", "g", "mg", "l", "cl", "ml", "st"
+        };
+
         /// <summary>
         /// Decodes the HTML.
         /// </summary>
