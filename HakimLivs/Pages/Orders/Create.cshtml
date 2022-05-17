@@ -4,70 +4,108 @@
     ViewData["Title"] = "Checka ut";
 }
 
-@if(Model.Products.Count() > 0){
-<h1>Skapa order</h1>
+@if (Model.Products.Count() > 0)
+{
+    <h1>Skapa order</h1>
 
-<div class="container-fluid">
+    <div class="row">
 
-    <div class="row w-100">
-        <div class="col-md">
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 justify-content-center">
-                <form method="post">
-                    
-                    @foreach (var product in @Model.Products)
+        <form method="post">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th class="col-2" scope="col" style="text-align: center;">Bild</th>
+                        <th class="col-auto" scope="col">Produkt</th>
+                        <th class="col-1" scope="col" style="text-align: center;">Antal</th>
+                        <th class="col-1" scope="col" style="text-align: center;">Pris</th>
+                        <th class="col-1" scope="col" style="text-align: center;">Totalt</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var product in Model.Products)
                     {
-                        <div class="col p-3">
-                            <div class="card h-100 text-center">
+                        <tr>
+                            <td style="text-align: center;">
                                 <img src="@product.Image"
-                                 class="card-img-top align-self-center p-3"
-                                 style="height: 50%; width: 50%; object-fit: contain;"
-                                 alt="@product.Name">
-                                <div class="card-body">
-                                    @if (product.DiscountPrice == null)
-                                    {
-                                        <h5 class="card-title">@Utils.DisplayPrice(product.Price)</h5>
-                                    }
-                                    else
-                                    {
-                                        <h5 class="card-title text-danger" style="font-size: 2rem;">@Utils.DisplayPrice(product.DiscountPrice)</h5>
-                                        <h6 class="card-subtitle mb-2 text-secondary"><s>@Utils.DisplayPrice(product.Price)</s> (-@Utils.GetProductDiscountPercentage(product)%)</h6>
-                                    }
-                                    <h6 class="card-subtitle" style="min-height: 3rem;"><a asp-page="./Products/Details" asp-route-id="@product.ID">@product.Name</a></h6>
-                                    <ul class="list-group list-group-flush">
+                             class="card-img-top align-self-center p-3"
+                             style="height: 8rem; width: auto; object-fit: contain;"
+                             alt="@product.Name">
+                            </td>
 
-                                        <li class="list-group-item">@product.Brand</li>
-                                        <li class="list-group-item">@Utils.DisplayUnitvalue(product.UnitValue) @product.UnitType</li>                                       
-                                        <li class="list-group-item">Antal: @Model.ProductsCount[product.ID]</li>
+                            <td>
+                                <a asp-page="./Products/Details" asp-route-id="@product.ID">@product.Name</a>
+                            </td>
+                            <td style="text-align: center;">
+                                @Model.ProductsCount[product.ID]
+                            </td>
+                            @if (product.DiscountPrice == null)
+                            {
+                                <td style="text-align: right;">
+                                    @Utils.DisplayPrice(product.Price);
+                                </td>
+                                <td style="text-align: right;">
+                                    @Utils.DisplayPrice((product.Price * @Model.ProductsCount[product.ID]))
+                                </td>
 
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                            }
+                            else
+                            {
+                                <td style="text-align: right;">
+                                    @Utils.DisplayPrice(product.DiscountPrice);
+                                </td>
+                                <td style="text-align: right;">
+                                    @Utils.DisplayPrice((product.DiscountPrice * @Model.ProductsCount[product.ID]))
+                                </td>
+                            }
+                        </tr>
                     }
-                    <div class="form-group mt-2 mb-2">
-                        <input type="submit" value="Skapa order" class="btn btn-primary"/>
-                    </div>
-                </form>             
-                <form method="post" asp-page-handler="Empty">
-                    <div class="form-group mt-2 mb-2">
-                        <input type="submit" value="Töm varukorg" class="btn btn-primary" onclick="return confirm('Töm varukorg, är du säker?')" />
-                    </div>
-                </form>
-                <h6><b>Totalpris:</b> @Utils.DisplayPrice(Model.TotalPrice)</h6>
+                </tbody>
+                <tfoot class="border-bottom-0">
+                    <tr>
+                        <td colspan="4" style="text-align: right; border: none;">
+                            <b>Totalpris:</b>
+                        </td>
+                        <td style="text-align: right;">
+                            @Utils.DisplayPrice(@Model.TotalPrice)
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+            <hr />
+            
+            <div class="form-group">
+                <label asp-for="@Model.Order.PaymentMethod">Betalningsmetod</label>
+                <select asp-for="@Model.Order.PaymentMethod" asp-items="Html.GetEnumSelectList<Models.PaymentMethod>()"></select>
             </div>
-        </div>
+            <div class="form-group mt-2">
+                <label asp-for="@Model.Order.DeliveryMethod">Leveransmetod</label>
+                <select asp-for="@Model.Order.DeliveryMethod" asp-items="Html.GetEnumSelectList<Models.DeliveryMethod>()"></select>
+            </div>
+            
+            <hr />
+
+            <div class="form-group mt-2 mb-2">
+                <input type="submit" value="Skapa order" class="btn btn-primary" />
+            </div>
+        </form>
+        <form method="post" asp-page-handler="Empty">
+            <div class="form-group mt-2 mb-2">
+                <input type="submit" value="Töm varukorg" class="btn btn-primary" onclick="return confirm('Töm varukorg, är du säker?')" />
+            </div>
+        </form>
     </div>
-    </div>
+
 }
 else
 {
     @if (!string.IsNullOrEmpty(Model.Message))
-	{
+    {
         <script>localStorage.clear()</script>
-		<h3>@Model.Message</h3>
-		<br />	
+        <h3>@Model.Message</h3>
+        <br />
     }
-    else {
+    else
+    {
         <h3>
             <script>localStorage.clear()</script>
             Varukorgen är tom!

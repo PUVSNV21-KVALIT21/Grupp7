@@ -19,7 +19,7 @@ namespace HakimLivs.Pages.Orders
 
         [BindProperty(SupportsGet = true)]
         public string Message { get; set; } 
-        
+        [BindProperty]
         public Order Order { get; set; }
 
         public List<Product> Products { get; set; }
@@ -82,8 +82,11 @@ namespace HakimLivs.Pages.Orders
 
             CountProducts();
 
+
             var order = new Order {
-                User = user
+                User = user,
+                PaymentMethod = Order.PaymentMethod,
+                DeliveryMethod = Order.DeliveryMethod
             };
 
             foreach (var product in Products)
