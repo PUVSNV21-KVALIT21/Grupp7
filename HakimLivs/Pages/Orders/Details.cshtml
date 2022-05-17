@@ -28,8 +28,10 @@
                         <thead>
                             <tr>
                                 <th class="col-1" scope="col" style="text-align: center;">Plockad</th>
-                                <th class="col-1" scope="col" style="text-align: center;">Antal</th>
                                 <th class="col-auto" scope="col">Produkt</th>
+                                <th class="col-1" scope="col" style="text-align: center;">Antal</th>
+                                <th class="col-1" scope="col" style="text-align: center;">Pris</th>
+                                <th class="col-1" scope="col" style="text-align: center;">Totalt</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -39,15 +41,35 @@
                                     <td style="text-align: center;">
                                         <input class="form-check-input" type="checkbox">
                                     </td>
+                                    
+                                    <td>
+                                        @orderproducts.Product.Name
+                                    </td>
                                     <td style="text-align: center;">
                                         @orderproducts.Quantity
                                     </td>
-                                    <td>
-                                        @orderproducts.Product.Name
+                                    <td style="text-align: right;">
+                                        @orderproducts.Product.Price
+                                    </td>
+                                    <td style="text-align: right;">
+                                        @Math.Round((@orderproducts.Product.Price * @orderproducts.Quantity), 2)
                                     </td>
                                 </tr>
                             }
                         </tbody>
+                        <tfoot class="border-bottom-0">
+                            <tr>
+                                @*<td class="table-borderless"></td>
+                                <td class="table-borderless"></td>
+                                <td style="border-width: 0;"></td>*@
+                                <td colspan="4" style="text-align: right; border: none;">
+                                    Totalt:
+                                </td>
+                                <td style="text-align: right;">
+                                    @Math.Round(@Model.Total, 2)
+                                </td>
+                            </tr>
+                        </tfoot>
                     </table>
                 <hr />
             </div>
