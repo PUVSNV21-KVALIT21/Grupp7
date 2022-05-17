@@ -24,6 +24,8 @@ namespace HakimLivs.Pages
         public Product? Product { get; set; }
         public List<Product>? Products { get; set; }
         public List<string>? Categories { get; set; }
+        public List<Product> Cart { get; set; }
+        public int CartCount { get; set; }
 
         public async Task<IActionResult> OnGetAsync(string? category)
         {
@@ -31,6 +33,8 @@ namespace HakimLivs.Pages
             if (httpUser != null)
             {
                 AppUser = await _context.Users.FirstOrDefaultAsync(u => u.Id == httpUser.Id);
+                Cart = await _context.Cart.Where(u => u.AppUser.Id == httpUser.Id).Select(c => c.Product).ToListAsync();
+                CartCount = Cart.Count;
             }
 
             Categories = await _context.Products.Select(c => c.Category).Distinct().ToListAsync();
