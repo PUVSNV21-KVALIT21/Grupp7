@@ -23,9 +23,21 @@ namespace HakimLivs.Pages.MyPages
         public string ConfirmPassword { get; set; }
         [BindProperty(SupportsGet = true)]
         public string? Message { get; set; }
+        public bool CanEdit { get; set; } = true;
         public async Task OnGetAsync(string id)
         {
             AppUser = await database.Users.FirstOrDefaultAsync(u => u.Id == id);
+
+            var orderList = await database.Orders.Where(o => o.User.Id == AppUser.Id).ToListAsync();
+
+            foreach (var order in orderList)
+            {
+                if (order.Status != "Betald")
+                {
+                    CanEdit = false;
+                    break;
+                }
+            }
         }
 
         public async Task<IActionResult> OnPostAsync(AppUser appUser)

@@ -16,41 +16,72 @@ namespace HakimLivs.Pages.Products
     public class EditModel : PageModel
     {
 
-        private readonly HakimLivs.Data.ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public EditModel(HakimLivs.Data.ApplicationDbContext context)
+        public EditModel(ApplicationDbContext context)
         {
             _context = context;
         }
 
+        public SelectList Categories { get; set; }
+        [BindProperty]
+        public string SelectedCategory { get; set; }
         [BindProperty]
         public Product Product { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public List<string> SelectListItems { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public int? ProductId { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null)
+            if (ProductId == null)
             {
-                return NotFound();
-            }
+                if (id == null)
+                {
+                    return NotFound();
+                }
 
-            Product = await _context.Products.FirstOrDefaultAsync(m => m.ID == id);
+                Product = await _context.Products.FirstOrDefaultAsync(m => m.ID == id);
+                if (SelectListItems.Count() == 0)
+                {
+                    SelectListItems = await _context.Products.Select(p => p.Category).ToListAsync();
+                    SelectListItems.Insert(0, Product.Category);
+                    Categories = new SelectList(SelectListItems.Distinct());
+                }
+                else
+                {
+                    Categories = new SelectList(SelectListItems);
+                }
+            }
+            else
+            {
+                Product = await _context.Products.FirstOrDefaultAsync(m => m.ID == ProductId);
+                if (SelectListItems.Count() == 0)
+                {
+                    SelectListItems = await _context.Products.Select(p => p.Category).ToListAsync();
+                    SelectListItems.Insert(0, Product.Category);
+                    Categories = new SelectList(SelectListItems.Distinct());
+                }
+                else
+                {
+                    Categories = new SelectList(SelectListItems);
+                }
+            }
 
             if (Product == null)
             {
                 return NotFound();
             }
             return Page();
+
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
+            
             _context.Attach(Product).State = EntityState.Modified;
 
             try
@@ -69,7 +100,7 @@ namespace HakimLivs.Pages.Products
                 }
             }
 
-            return RedirectToPage("../Index");
+            return RedirectToPage("/Admin/Index");
         }
 
         private bool ProductExists(int id)

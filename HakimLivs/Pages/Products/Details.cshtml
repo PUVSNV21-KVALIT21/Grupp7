@@ -2,7 +2,7 @@
 @model HakimLivs.Pages.Products.DetailsModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detaljer";
 }
 
 
@@ -19,11 +19,11 @@
                 <p class="card-text pt-3">@Utils.DecodeHTML(Model.Product.Description)</p>
                 
                 @if(@Model.Product.DiscountPrice == null || @Model.Product.DiscountPrice == 0){
-                    <span class="fw-bold row justify-content-center pb-3" style="font-size: 5rem;">@Html.DisplayFor(m => Utils.DisplayPrice(Model.Product.Price))</span>
+                    <span class="fw-bold text-danger row justify-content-center pb-3" style="font-size: 5rem;">@Html.DisplayFor(m => Utils.DisplayPrice(Model.Product.Price))</span>
                 }
                 else
                 {
-                    <h5 class="card-title">@Utils.DisplayPrice(Model.Product.DiscountPrice)</h5>
+                    <p class="fw-bold text-danger text-center" style="font-size: 5rem;">@Utils.DisplayPrice(@Model.Product.DiscountPrice)</p>
                 }
                 <form method="post">
                 @if (Model.AppUser != null)
@@ -39,6 +39,9 @@
                 </form>
                 <hr />
                     <ul style="list-style: none">
+                        <li>
+                            <b>Ordinarie pris:</b> @Utils.DisplayPrice(@Model.Product.Price) (-@Utils.GetProductDiscountPercentage(@Model.Product)%)
+                        </li>
                         <li>
                             <b>Jämförpris:</b> @Utils.DisplayPrice(Model.Product.ComparisonPrice)/@Model.Product.UnitType
                         </li>

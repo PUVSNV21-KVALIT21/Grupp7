@@ -1,19 +1,25 @@
-﻿@page
+@page
 @model HakimLivs.Pages.Products.EditModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Redigera";
 }
 
-<h1>Edit</h1>
+<h1>Redigera</h1>
 
-<h4>Product</h4>
+<h4>Produkt</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Product.ID" />
+            <a asp-page="./AddCategory" asp-route-id="edit" asp-route-ProductId=@Model.Product.ID>Lägg till ny kategori</a>
+
+            <div class="form-group">
+                <label asp-for="Product.Category"></label>
+                <select asp-for="Product.Category" asp-items="Model.Categories"></select>
+            </div>
             <div class="form-group">
                 <label asp-for="Product.Name" class="control-label"></label>
                 <input asp-for="Product.Name" class="form-control" />
@@ -23,11 +29,6 @@
                 <label asp-for="Product.Description" class="control-label"></label>
                 <input asp-for="Product.Description" class="form-control" />
                 <span asp-validation-for="Product.Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Product.Category" class="control-label"></label>
-                <input asp-for="Product.Category" class="form-control" />
-                <span asp-validation-for="Product.Category" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Product.Brand" class="control-label"></label>
@@ -48,11 +49,6 @@
                 <label asp-for="Product.DiscountPrice" class="control-label"></label>
                 <input asp-for="Product.DiscountPrice" class="form-control" />
                 <span asp-validation-for="Product.DiscountPrice" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Product.ComparisonPrice" class="control-label"></label>
-                <input asp-for="Product.ComparisonPrice" class="form-control" />
-                <span asp-validation-for="Product.ComparisonPrice" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Product.Origin" class="control-label"></label>

@@ -26,7 +26,7 @@ namespace HakimLivs.Pages.Register
         public string? password { get; set; }
         public string? confirmPassword { get; set; }
 
-        public async Task OnGet()
+        public async Task OnGetAsync()
         {
         }
 
