@@ -26,6 +26,7 @@ namespace HakimLivs.Pages.Orders
 
         // Keep track of quantity per product
         public Dictionary<int, int> ProductsCount { get; set; }
+        public double TotalPrice { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -40,7 +41,7 @@ namespace HakimLivs.Pages.Orders
                 .ToListAsync();
 
                 CountProducts();
-                
+                CalculatePrice();
             }
 
             return Page();
@@ -59,7 +60,7 @@ namespace HakimLivs.Pages.Orders
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("/Index");
+            return RedirectToPage("/Orders/Create");
 
         }
 
@@ -130,6 +131,24 @@ namespace HakimLivs.Pages.Orders
             // Remove duplicate products that have now been counted
             Products = Products.DistinctBy(p => p.ID).ToList();
 
+        }
+
+        private void CalculatePrice()
+        {
+            double totalPrice = 0;
+            foreach (var product in ProductsCount)
+            {
+                var p = _context.Products.FirstOrDefault(p => p.ID == product.Key);
+                if(p?.DiscountPrice != null || p?.DiscountPrice != 0)
+                {
+                    totalPrice += (double)p.DiscountPrice * product.Value;
+                }
+                else
+                {
+                    totalPrice += p.Price * product.Value;
+                }
+            }
+            TotalPrice = totalPrice;
         }
     }
 }

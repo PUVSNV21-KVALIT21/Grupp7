@@ -20,6 +20,7 @@ namespace HakimLivs.Pages.Orders
         }
         [BindProperty]
         public string SelectedStatus { get; set; }
+        public double Total { get; set; }
         public Order Order { get; set; }
         public List<OrderProduct> OrderProducts { get; set; }
 
@@ -36,6 +37,12 @@ namespace HakimLivs.Pages.Orders
             if (Order == null)
             {
                 return NotFound();
+            }
+
+            foreach (var product in OrderProducts)
+            {
+                var sumProducts = (product.Product.Price * product.Quantity);
+                Total += sumProducts;
             }
             return Page();
         }
