@@ -279,7 +279,6 @@ namespace HakimLivs.Data
                                     {
                                         unitValue = unitRaw;
                                     }
-                                    double? comparisonPrice = 1 / unitValue * discountPrice;
 
                                     var product = new Product
                                     {
@@ -290,7 +289,6 @@ namespace HakimLivs.Data
                                         Image = image,
                                         Price = price,
                                         DiscountPrice = discountPrice,
-                                        ComparisonPrice = comparisonPrice,
                                         Origin = origin,
                                         ExpirationDate = expirationDate,
                                         Stock = stock,
