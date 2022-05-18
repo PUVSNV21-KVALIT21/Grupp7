@@ -18,7 +18,7 @@
 
             <div class="form-group">
                 <label asp-for="Product.Category"></label>
-                <select asp-for="Product.Category" asp-items="Model.Categories"></select>
+                <select asp-for="Product.Category" class="form-select" asp-items="Model.Categories"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Product.Name" class="control-label"></label>
@@ -67,7 +67,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Product.UnitType"></label>
-                <select asp-for="Product.UnitType" asp-items="Model.UnitTypes"></select>
+                <select asp-for="Product.UnitType" class="form-select" asp-items="Model.UnitTypes"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Product.UnitValue" class="control-label"></label>
