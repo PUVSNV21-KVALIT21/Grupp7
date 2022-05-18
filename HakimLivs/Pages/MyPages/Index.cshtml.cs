@@ -44,8 +44,9 @@ namespace HakimLivs.Pages.MyPages
         {
             var user = await database.Users.FirstOrDefaultAsync(x => x.Id == appUser.Id);
             var emailList = await database.Users.Select(e => e.Email).ToListAsync();
+            var email = appUser.Email;
 
-            if (appUser.Email != user.Email && !emailList.Contains(user.Email) || appUser.Email == user.Email)
+            if (email != user.Email && !emailList.Contains(email) || email == user.Email)
             {
                 user.FirstName = appUser.FirstName;
                 user.LastName = appUser.LastName;
