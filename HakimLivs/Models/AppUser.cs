@@ -24,6 +24,8 @@ namespace HakimLivs.Models
         public string Street { get; set; }
         [Required]
         [Display(Name = "Postkod")]
+        [MaxLength(5), MinLength(5)]
+        [RegularExpression(@"^\d{5}")]
         public string ZipCode { get; set; }
         [Required]
         [Display(Name = "Stad")]
