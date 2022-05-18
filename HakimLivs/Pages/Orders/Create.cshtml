@@ -33,7 +33,7 @@
                             </td>
 
                             <td>
-                                <a asp-page="./Products/Details" asp-route-id="@product.ID">@product.Name</a>
+                                <a asp-page="../Products/Details" asp-route-id="@product.ID">@product.Name</a>
                             </td>
                             <td style="text-align: center;">
                                 @Model.ProductsCount[product.ID]
@@ -41,7 +41,7 @@
                             @if (product.DiscountPrice == null)
                             {
                                 <td style="text-align: right;">
-                                    @Utils.DisplayPrice(product.Price);
+                                    @Utils.DisplayPrice(product.Price)
                                 </td>
                                 <td style="text-align: right;">
                                     @Utils.DisplayPrice((product.Price * @Model.ProductsCount[product.ID]))
@@ -51,7 +51,7 @@
                             else
                             {
                                 <td style="text-align: right;">
-                                    @Utils.DisplayPrice(product.DiscountPrice);
+                                    @Utils.DisplayPrice(product.DiscountPrice)
                                 </td>
                                 <td style="text-align: right;">
                                     @Utils.DisplayPrice((product.DiscountPrice * @Model.ProductsCount[product.ID]))
