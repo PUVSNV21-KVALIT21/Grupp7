@@ -38,6 +38,7 @@ namespace HakimLivs.Pages.Orders
                 Products = await _context.Cart
                 .Where(c => c.AppUser.Id == httpUser.Id)
                 .Select(c => c.Product)
+                .OrderBy(p => p.Name)
                 .ToListAsync();
 
                 CountProducts();
