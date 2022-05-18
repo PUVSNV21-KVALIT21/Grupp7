@@ -23,6 +23,7 @@ namespace HakimLivs.Pages.Orders
         public double Total { get; set; }
         public Order Order { get; set; }
         public List<OrderProduct> OrderProducts { get; set; }
+        public AppUser? AppUser { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -33,7 +34,7 @@ namespace HakimLivs.Pages.Orders
 
             Order = await _context.Orders.Include(o => o.User).FirstOrDefaultAsync(o => o.ID == id);
             OrderProducts = await _context.OrderProducts.Include(o => o.Product).Where(o => o.Order.ID == id).ToListAsync();
-
+            AppUser = await _context.Users.FirstOrDefaultAsync(u => u.Id == Order.User.Id);
             if (Order == null)
             {
                 return NotFound();

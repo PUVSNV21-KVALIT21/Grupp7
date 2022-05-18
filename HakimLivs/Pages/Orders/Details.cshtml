@@ -77,6 +77,15 @@
                                     Leveransmetod: @Model.Order.DeliveryMethod
                                 </td>
                             </tr>
+                             <tr>
+                                <td colspan="5">
+                                    Adress:<br /> 
+                                    @Model.AppUser.FirstName @Model.AppUser.LastName<br /> 
+                                    @Model.AppUser.Address.Street<br />  
+                                    @Model.AppUser.Address.ZipCode<br /> 
+                                    @Model.AppUser.Address.City
+                                </td>
+                            </tr>
                         </tfoot>
                     </table>
                 <hr />

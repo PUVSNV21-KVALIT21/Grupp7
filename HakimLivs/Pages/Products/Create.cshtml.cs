@@ -56,7 +56,7 @@ namespace HakimLivs.Pages.Products
             _context.Products.Add(Product);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("../Admin/Index");
+            return RedirectToPage("../Products/Create");
         }
     }
 }
