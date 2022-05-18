@@ -36,7 +36,9 @@
                                 <a asp-page="../Products/Details" asp-route-id="@product.ID">@product.Name</a>
                             </td>
                             <td style="text-align: center;">
-                                @Model.ProductsCount[product.ID]
+                                <button asp-page-handler="UpdateAmount" asp-route-id="@product.ID" asp-route-operation="subtract">-</button> 
+                                @Model.ProductsCount[product.ID] 
+                                <button asp-page-handler="UpdateAmount" asp-route-id="@product.ID">+</button>
                             </td>
                             @if (product.DiscountPrice == null)
                             {
