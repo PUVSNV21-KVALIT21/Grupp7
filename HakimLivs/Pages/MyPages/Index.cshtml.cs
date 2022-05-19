@@ -52,7 +52,9 @@ namespace HakimLivs.Pages.MyPages
                 user.LastName = appUser.LastName;
                 user.Address = new Address { Street = appUser.Address.Street, ZipCode = appUser.Address.ZipCode, City = appUser.Address.City };
                 user.Email = appUser.Email;
+                user.NormalizedEmail = appUser.Email.ToUpper();
                 user.UserName = appUser.Email;
+                user.NormalizedUserName = appUser.Email.ToUpper();
 
                 await database.SaveChangesAsync();
                 Message = "Ändringar sparade.";
