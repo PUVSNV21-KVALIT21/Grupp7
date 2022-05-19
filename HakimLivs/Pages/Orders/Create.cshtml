@@ -4,6 +4,10 @@
     ViewData["Title"] = "Checka ut";
 }
 
+<script>
+    window.onload=function() {updateCartIconFromDB(@Model.CartCount)}
+</script>
+
 @if (Model.Products.Count() > 0)
 {
     <h1>Skapa order</h1>
