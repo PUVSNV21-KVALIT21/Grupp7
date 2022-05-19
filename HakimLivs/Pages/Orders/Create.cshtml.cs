@@ -21,7 +21,8 @@ namespace HakimLivs.Pages.Orders
         public string Message { get; set; } 
         [BindProperty]
         public Order Order { get; set; }
-
+        public List<Product> Cart { get; set; }
+        public int CartCount { get; set; }
         public List<Product> Products { get; set; }
 
         // Keep track of quantity per product
@@ -40,6 +41,9 @@ namespace HakimLivs.Pages.Orders
                 .Select(c => c.Product)
                 .OrderBy(p => p.Name)
                 .ToListAsync();
+
+                Cart = await _context.Cart.Where(u => u.AppUser.Id == httpUser.Id).Select(c => c.Product).ToListAsync();
+                CartCount = Cart.Count;
 
                 CountProducts();
                 CalculatePrice();
