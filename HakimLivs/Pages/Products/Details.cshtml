@@ -39,9 +39,11 @@
                 </form>
                 <hr />
                     <ul style="list-style: none">
-                        <li>
-                            <b>Ordinarie pris:</b> @Utils.DisplayPrice(@Model.Product.Price) (-@Utils.GetProductDiscountPercentage(@Model.Product)%)
-                        </li>
+                        @if (Model.Product.DiscountPrice != null && Model.Product.DiscountPrice != Model.Product.Price) {
+                            <li>
+                                <b>Ordinarie pris:</b> @Utils.DisplayPrice(@Model.Product.Price) (-@Utils.GetProductDiscountPercentage(@Model.Product)%)
+                            </li>
+                        }
                         <li>
                             <b>Jämförpris:</b> @Utils.DisplayPrice(Model.Product.ComparisonPrice)/@Model.Product.UnitType
                         </li>

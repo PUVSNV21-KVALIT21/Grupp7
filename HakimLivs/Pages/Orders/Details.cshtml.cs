@@ -20,7 +20,7 @@ namespace HakimLivs.Pages.Orders
         }
         [BindProperty]
         public string SelectedStatus { get; set; }
-        public double Total { get; set; }
+        public double? Total { get; set; }
         public Order Order { get; set; }
         public List<OrderProduct> OrderProducts { get; set; }
         public AppUser? AppUser { get; set; }
@@ -40,10 +40,22 @@ namespace HakimLivs.Pages.Orders
                 return NotFound();
             }
 
-            foreach (var product in OrderProducts)
+            Total = 0;
+
+            foreach (var orderProduct in OrderProducts)
             {
-                var sumProducts = (product.Product.Price * product.Quantity);
-                Total += sumProducts;
+                double? sumProducts;
+                if (orderProduct.Product.DiscountPrice == null || orderProduct.Product.DiscountPrice == 0)
+                {
+                    sumProducts = (orderProduct.Product.Price * orderProduct.Quantity);
+                    Total += sumProducts;
+                }
+                else
+                {
+                    sumProducts = (orderProduct.Product.DiscountPrice * orderProduct.Quantity);
+                    Total += sumProducts;
+                }
+                
             }
             return Page();
         }

@@ -49,13 +49,25 @@
                                     <td style="text-align: center;">
                                         @orderproducts.Quantity
                                     </td>
-                                    <td style="text-align: right;">
-                                        @orderproducts.Product.Price
-                                    </td>
-                                    <td style="text-align: right;">
-                                        @Math.Round((@orderproducts.Product.Price * @orderproducts.Quantity), 2)
-                                    </td>
-                                </tr>
+                                    @if(orderproducts.Product.DiscountPrice == null || orderproducts.Product.DiscountPrice == 0)
+                                    {
+                                        <td style="text-align: right;">                                   
+                                            @orderproducts.Product.Price
+                                        </td>
+                                        <td style="text-align: right;">
+                                            @Utils.DisplayPrice((orderproducts.Product.Price * orderproducts.Quantity))
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td style="text-align: right;"> 
+                                            @orderproducts.Product.DiscountPrice
+                                        </td>
+                                        <td style="text-align: right;">
+                                            @Utils.DisplayPrice((orderproducts.Product.DiscountPrice * orderproducts.Quantity))
+                                        </td>
+                                    }
+                            </tr>
                             }
                         </tbody>
                         <tfoot class="border-bottom-0">
@@ -64,7 +76,7 @@
                                     Totalt:
                                 </td>
                                 <td style="text-align: right;">
-                                    @Math.Round(@Model.Total, 2)
+                                    @Utils.DisplayPrice(Model.Total)
                                 </td>
                             </tr>
                             <tr>
