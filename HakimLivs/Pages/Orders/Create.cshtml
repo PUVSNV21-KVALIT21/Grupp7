@@ -35,10 +35,10 @@
                             <td>
                                 <a asp-page="../Products/Details" asp-route-id="@product.ID">@product.Name</a>
                             </td>
-                            <td style="text-align: center;">
-                                <button class="btn btn-primary btn-sm" asp-page-handler="UpdateAmount" asp-route-id="@product.ID" asp-route-operation="subtract">-</button> 
-                                @Model.ProductsCount[product.ID] 
-                                <button class="btn btn-primary btn-sm" asp-page-handler="UpdateAmount" asp-route-id="@product.ID">+</button>
+                             <td style="text-align: center;">
+                                <button class="btn btn-primary btn-sm" asp-page-handler="UpdateAmount" asp-route-id="@product.ID" asp-route-operation="subtract"><strong>-</strong></button> 
+                                <strong>@Model.ProductsCount[product.ID]</strong>
+                                <button class="btn btn-primary btn-sm" asp-page-handler="UpdateAmount" asp-route-id="@product.ID"><strong>+</strong></button>
                             </td>
                             @if (product.DiscountPrice == null)
                             {
