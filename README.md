@@ -8,34 +8,66 @@ https://g7-wa-hakimlivs-prod.azurewebsites.net/ | Prod | Production | [![Prod](h
 
 </div>
 
-# Grupp7 
+# Group7 
 
-## Arkitektur
+## Architecture
 
 ### Web App
 
-ASP.NET Razor Pages Web Application .NET 6, individual accounts
+ASP.NET Razor Pages Web Application .NET 6, Entity Framework Core & individual accounts
+
+#### NuGet Packages
+
+* Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore Version="6.0.4"
+* Microsoft.AspNetCore.Identity.EntityFrameworkCore Version="6.0.4" 
+* Microsoft.AspNetCore.Identity.UI Version="6.0.4"
+* Microsoft.AspNetCore.Mvc.NewtonsoftJson Version="6.0.4"
+* Microsoft.EntityFrameworkCore Version="6.0.4"
+* Microsoft.EntityFrameworkCore.SqlServer Version="6.0.4"
+* Microsoft.EntityFrameworkCore.Tools Version="6.0.4"
+
 
 #### Razor pages
 
 * Index.cshtml: landing page.
-* Products: Create, Edit, Details, Delete.
+* Products: Create, Edit, Details & Delete.
+* Orders: Create, Details & Delete.
+* Admin: Index, Products, Orders & Customers
+* MyPages: Index
+* Register: Index
+
+#### Utilities
+
+* DecodeHTML()
+* DisplayPrice()
+* DisplayUnitValue()
+* GetProductDiscountPercentage()
+* StripHTML()
+* DropDatabase()
 
 #### LocalStorage
 
-* Product added to cart: `(<productID>, <quantity>)`
-* Number of products in cart: `('cartQuantity', <quantity>)`
+* Product added to cart: `(<productID>, <quantity>)` (In use, CartCounter only)
+* Number of products in cart: `('cartQuantity', <quantity>)` (Function not in use, can be used in a future sprint)
 
-### Databas
+### Database
 
-#### Entity Framework Core 6.0.4
+* PostgreSQL
 
-##### Modeller
+### Models
 
 * Order
 * Product
 * User
+* Cart
 
-### Tester
+### Tests
 
-#### Unit-tester
+#### Unit-tests MS-Test
+
+* DisplayNoDecimalPrice()
+* DisplayDecimalPrice()
+* DisplayMultiplePrice()
+* DiscountPercentageInt()
+* DiscountPercentageDouble()
+* StripHTMLTags()
