@@ -1,4 +1,4 @@
-﻿using HakimLivs.Data;
+using HakimLivs.Data;
 using HakimLivs.Models;
 using System.Globalization;
 using System.Text.RegularExpressions;

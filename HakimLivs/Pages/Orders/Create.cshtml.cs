@@ -140,7 +140,7 @@ namespace HakimLivs.Pages.Orders
             await _context.Orders.AddAsync(order);
             await _context.SaveChangesAsync();
 
-            Message = "Tack för ditt köp!";
+            Message = "Tack fÃ¶r ditt kÃ¶p!";
 
             return RedirectToPage("/Orders/Create", new { Message });
         }

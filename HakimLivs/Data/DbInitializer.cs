@@ -1,4 +1,4 @@
-﻿using HakimLivs.Models;
+using HakimLivs.Models;
 using HakimLivs.Utilities;
 using Microsoft.AspNetCore.Identity;
 using System.Globalization;
