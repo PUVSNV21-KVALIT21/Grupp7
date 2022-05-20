@@ -1,4 +1,4 @@
-﻿@page "{id}"
+@page "{id}"
 @model HakimLivs.Pages.Orders.DetailsModel
 
 @{
@@ -23,13 +23,16 @@
                     </select>
                     <button class="btn btn-primary" type="submit">Spara</button>
                 </form>
+
                 <hr />
                     <table class="table table-bordered">
                         <thead>
                             <tr>
                                 <th class="col-1" scope="col" style="text-align: center;">Plockad</th>
-                                <th class="col-1" scope="col" style="text-align: center;">Antal</th>
                                 <th class="col-auto" scope="col">Produkt</th>
+                                <th class="col-1" scope="col" style="text-align: center;">Antal</th>
+                                <th class="col-1" scope="col" style="text-align: center;">Pris</th>
+                                <th class="col-1" scope="col" style="text-align: center;">Totalt</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -39,15 +42,63 @@
                                     <td style="text-align: center;">
                                         <input class="form-check-input" type="checkbox">
                                     </td>
-                                    <td style="text-align: center;">
-                                        @orderproducts.Quantity
-                                    </td>
+                                    
                                     <td>
                                         @orderproducts.Product.Name
                                     </td>
-                                </tr>
+                                    <td style="text-align: center;">
+                                        @orderproducts.Quantity
+                                    </td>
+                                    @if(orderproducts.Product.DiscountPrice == null || orderproducts.Product.DiscountPrice == 0)
+                                    {
+                                        <td style="text-align: right;">                                   
+                                            @orderproducts.Product.Price
+                                        </td>
+                                        <td style="text-align: right;">
+                                            @Utils.DisplayPrice((orderproducts.Product.Price * orderproducts.Quantity))
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td style="text-align: right;"> 
+                                            @orderproducts.Product.DiscountPrice
+                                        </td>
+                                        <td style="text-align: right;">
+                                            @Utils.DisplayPrice((orderproducts.Product.DiscountPrice * orderproducts.Quantity))
+                                        </td>
+                                    }
+                            </tr>
                             }
                         </tbody>
+                        <tfoot class="border-bottom-0">
+                            <tr>
+                                <td colspan="4" style="text-align: right; border: none;">
+                                    Totalt:
+                                </td>
+                                <td style="text-align: right;">
+                                    @Utils.DisplayPrice(Model.Total)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="5">
+                                    Betalningsmetod: @Model.Order.PaymentMethod
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="5">
+                                    Leveransmetod: @Model.Order.DeliveryMethod
+                                </td>
+                            </tr>
+                             <tr>
+                                <td colspan="5">
+                                    Adress:<br /> 
+                                    @Model.AppUser.FirstName @Model.AppUser.LastName<br /> 
+                                    @Model.AppUser.Address.Street<br />  
+                                    @Model.AppUser.Address.ZipCode<br /> 
+                                    @Model.AppUser.Address.City
+                                </td>
+                            </tr>
+                        </tfoot>
                     </table>
                 <hr />
             </div>

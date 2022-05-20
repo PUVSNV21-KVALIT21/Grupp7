@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HakimLivs.Models
@@ -25,8 +25,12 @@ namespace HakimLivs.Models
         public double Price { get; set; }
         [Display(Name = "Rabatterat pris")]
         public double? DiscountPrice { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         [Display(Name = "Jämförpris")]
-        public double? ComparisonPrice { get; set; }
+        public double? ComparisonPrice
+        {
+            get { return 1 / UnitValue * DiscountPrice;  }
+        }            
         [Required]
         [Display(Name = "Ursprungsland")]
         public string Origin { get; set; }

@@ -19,13 +19,15 @@ namespace HakimLivs.Pages.Orders
 
         [BindProperty(SupportsGet = true)]
         public string Message { get; set; } 
-        
+        [BindProperty]
         public Order Order { get; set; }
-
+        public List<Product> Cart { get; set; }
+        public int CartCount { get; set; }
         public List<Product> Products { get; set; }
 
         // Keep track of quantity per product
         public Dictionary<int, int> ProductsCount { get; set; }
+        public double TotalPrice { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -37,10 +39,14 @@ namespace HakimLivs.Pages.Orders
                 Products = await _context.Cart
                 .Where(c => c.AppUser.Id == httpUser.Id)
                 .Select(c => c.Product)
+                .OrderBy(p => p.Name)
                 .ToListAsync();
 
+                Cart = await _context.Cart.Where(u => u.AppUser.Id == httpUser.Id).Select(c => c.Product).ToListAsync();
+                CartCount = Cart.Count;
+
                 CountProducts();
-                
+                CalculatePrice();
             }
 
             return Page();
@@ -59,10 +65,38 @@ namespace HakimLivs.Pages.Orders
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("/Index");
+            return RedirectToPage("/Orders/Create");
 
         }
 
+        public async Task<IActionResult> OnPostUpdateAmountAsync(int id, string operation)
+        {
+            var httpUser = _userManager.GetUserAsync(User).Result;
+
+            if (httpUser != null)
+            {
+                var cartProduct = await _context.Cart.Include(c => c.Product).FirstOrDefaultAsync(c => c.AppUser.Id == httpUser.Id && c.Product.ID == id);
+
+
+                if (operation == "subtract")
+                {
+                    _context.Cart.Remove(cartProduct);
+                }
+                else
+                {
+                    var newUserProduct = new Cart {
+                        Product = cartProduct.Product,
+                        AppUser = cartProduct.AppUser
+                    };
+
+                    await _context.Cart.AddAsync(newUserProduct);
+                }
+
+                await _context.SaveChangesAsync();
+            }
+            
+            return RedirectToPage("/Orders/Create");
+        }
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -81,8 +115,11 @@ namespace HakimLivs.Pages.Orders
 
             CountProducts();
 
+
             var order = new Order {
-                User = user
+                User = user,
+                PaymentMethod = Order.PaymentMethod,
+                DeliveryMethod = Order.DeliveryMethod
             };
 
             foreach (var product in Products)
@@ -103,7 +140,7 @@ namespace HakimLivs.Pages.Orders
             await _context.Orders.AddAsync(order);
             await _context.SaveChangesAsync();
 
-            Message = "Tack för ditt köp!";
+            Message = "Tack fÃ¶r ditt kÃ¶p!";
 
             return RedirectToPage("/Orders/Create", new { Message });
         }
@@ -130,6 +167,24 @@ namespace HakimLivs.Pages.Orders
             // Remove duplicate products that have now been counted
             Products = Products.DistinctBy(p => p.ID).ToList();
 
+        }
+
+        private void CalculatePrice()
+        {
+            double totalPrice = 0;
+            foreach (var product in ProductsCount)
+            {
+                var p = _context.Products.FirstOrDefault(p => p.ID == product.Key);
+                if(p.DiscountPrice != null && p.DiscountPrice != 0)
+                {
+                    totalPrice += (double)p.DiscountPrice * product.Value;
+                }
+                else
+                {
+                    totalPrice += p.Price * product.Value;
+                }
+            }
+            TotalPrice = totalPrice;
         }
     }
 }

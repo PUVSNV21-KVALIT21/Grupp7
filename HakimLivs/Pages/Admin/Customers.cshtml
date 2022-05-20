@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model HakimLivs.Pages.Admin.CustomersModel
 @{
     ViewData["Title"] = "Hakim Livs!";
@@ -32,6 +32,9 @@
                             <tr>
                                 <th scope="col">Namn</th>
                                 <th scope="col">Email</th>
+                                <th scope="col">Adress</th>
+                                <th scope="col">Postnummer</th>
+                                <th scope="col">Stad</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -43,6 +46,15 @@
                                     </td>
                                     <td>
                                         @Html.DisplayFor(c => user.Email)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(c => user.Address.Street)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(c => user.Address.ZipCode)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(c => user.Address.City)
                                     </td>
                                 </tr>
                             }

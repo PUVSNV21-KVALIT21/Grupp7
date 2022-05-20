@@ -1,4 +1,4 @@
-﻿using HakimLivs.Models;
+using HakimLivs.Models;
 using HakimLivs.Utilities;
 using Microsoft.AspNetCore.Identity;
 using System.Globalization;
@@ -229,7 +229,15 @@ namespace HakimLivs.Data
                                     string d = item.attributes.body.value;
                                     string description = Utils.StripHTML(d);
 
-                                    string category = item.attributes.computed_categories[1].name;
+                                    string category = "";
+                                    if (item.attributes.computed_categories.Count > 1)
+                                    {
+                                        category = item.attributes.computed_categories[1].name;
+                                    }
+                                    else
+                                    {
+                                        category = item.attributes.computed_categories[0].name;
+                                    }
 
                                     string brand = "";
                                     if (item.attributes.computed_brand != null)
@@ -279,7 +287,6 @@ namespace HakimLivs.Data
                                     {
                                         unitValue = unitRaw;
                                     }
-                                    double? comparisonPrice = 1 / unitValue * discountPrice;
 
                                     var product = new Product
                                     {
@@ -290,7 +297,6 @@ namespace HakimLivs.Data
                                         Image = image,
                                         Price = price,
                                         DiscountPrice = discountPrice,
-                                        ComparisonPrice = comparisonPrice,
                                         Origin = origin,
                                         ExpirationDate = expirationDate,
                                         Stock = stock,
@@ -298,7 +304,13 @@ namespace HakimLivs.Data
                                         UnitValue = unitValue
                                     };
 
-                                    database.Products.Add(product);
+                                    try
+                                    {
+                                        database.Products.Add(product);
+                                    } catch (Exception ex)
+                                    {
+                                        Console.WriteLine(ex);
+                                    }
                                 }
                                 await database.SaveChangesAsync();
                             }

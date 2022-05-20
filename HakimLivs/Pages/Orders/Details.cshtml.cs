@@ -20,8 +20,10 @@ namespace HakimLivs.Pages.Orders
         }
         [BindProperty]
         public string SelectedStatus { get; set; }
+        public double? Total { get; set; }
         public Order Order { get; set; }
         public List<OrderProduct> OrderProducts { get; set; }
+        public AppUser? AppUser { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -32,10 +34,28 @@ namespace HakimLivs.Pages.Orders
 
             Order = await _context.Orders.Include(o => o.User).FirstOrDefaultAsync(o => o.ID == id);
             OrderProducts = await _context.OrderProducts.Include(o => o.Product).Where(o => o.Order.ID == id).ToListAsync();
-
+            AppUser = await _context.Users.FirstOrDefaultAsync(u => u.Id == Order.User.Id);
             if (Order == null)
             {
                 return NotFound();
+            }
+
+            Total = 0;
+
+            foreach (var orderProduct in OrderProducts)
+            {
+                double? sumProducts;
+                if (orderProduct.Product.DiscountPrice == null || orderProduct.Product.DiscountPrice == 0)
+                {
+                    sumProducts = (orderProduct.Product.Price * orderProduct.Quantity);
+                    Total += sumProducts;
+                }
+                else
+                {
+                    sumProducts = (orderProduct.Product.DiscountPrice * orderProduct.Quantity);
+                    Total += sumProducts;
+                }
+                
             }
             return Page();
         }
